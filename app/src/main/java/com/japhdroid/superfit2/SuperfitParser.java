@@ -5,7 +5,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,9 +92,32 @@ public class SuperfitParser {
                 type = "Team";
             }
             course.setType(type);
-            course.setTime(time);
+            course.setTime(parseTime(time, 0)); // TODO supply correct no of days
             course.setName(courseStr);
             courseList.add(course);
         }
+    }
+
+    private Date parseTime(String time, int addNoOfDays) {
+        Date suppliedDate = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        try {
+            suppliedDate = simpleDateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        cal.setTime(suppliedDate);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+        cal.set(year, month, day, hour, minute);
+
+        return new Date(cal.getTimeInMillis() + addNoOfDays * (24 * 3600 * 1000));
     }
 }

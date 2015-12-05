@@ -1,12 +1,14 @@
 package com.japhdroid.superfit2;
 
+import java.util.Date;
+
 /**
  * Created by User on 04.12.2015.
  */
 public class SuperfitCourse {
 
     private String type;
-    private String time;
+    private Date time;
     private String name;
 
     public String getType() {
@@ -17,11 +19,11 @@ public class SuperfitCourse {
         this.type = type;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
