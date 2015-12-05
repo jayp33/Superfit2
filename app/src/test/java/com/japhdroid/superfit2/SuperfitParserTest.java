@@ -1,8 +1,12 @@
 package com.japhdroid.superfit2;
 
+import junit.framework.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.util.List;
 
 /**
  * Created by User on 04.12.2015.
@@ -59,5 +63,19 @@ public class SuperfitParserTest {
         parser = new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte/fr");
         parser = new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte/sa");
         parser = new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte/so");
+    }
+
+    @Test
+    public void testCourseList() throws Exception {
+        // Test requires network connection
+        SuperfitParser parser = new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain/do");
+        parser.LoadData();
+        List<SuperfitCourse> courseList = parser.getCourseList();
+        Assert.assertTrue(courseList.size() > 0);
+        for (SuperfitCourse course : courseList) {
+            Assert.assertTrue(course.getType().equals("Kurs") || course.getType().equals("Team"));
+            Assert.assertEquals(5, course.getTime().length());
+            Assert.assertTrue(course.getName().endsWith(".jpg"));
+        }
     }
 }
