@@ -20,10 +20,14 @@ public class SuperfitParser {
     private List<SuperfitCourse> courseList = new ArrayList<>();
     private String url;
 
-    public SuperfitParser(String url) {
+    public SuperfitParser(String url, boolean useCurrentDay, boolean autoLoadData) {
         this.url = url;
         if (!CheckUrlIsValid())
             throw new IllegalArgumentException("The supplied URL is not valid.");
+        if (useCurrentDay)
+            this.url = GetUrlForDay(this.url, 0);
+        if (autoLoadData)
+            LoadData();
     }
 
     public List<SuperfitCourse> getCourseList() {
@@ -58,6 +62,24 @@ public class SuperfitParser {
         }
 
         return false;
+    }
+
+    private String GetUrlForDay(String urlForDay, int daysInTheFuture) {
+        if (daysInTheFuture < 0 || daysInTheFuture > 6)
+            throw new IllegalArgumentException("Days in the future must be between 0 and 6.");
+        String[] dateUrlPart = {"/di", "/mi", "/do", "/fr", "/sa", "/so"};
+        for (String dateAppendix : dateUrlPart) {
+            if (urlForDay.endsWith(dateAppendix))
+                throw new IllegalArgumentException("URL must not have Weekday appendix.");
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        String[] dateUrlPart2 = {"/so", "", "/di", "/mi", "/do", "/fr", "/sa"};
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK); // 1 = sunday .. 7 = saturday
+        dayOfWeek += daysInTheFuture;
+        if (dayOfWeek > 7)
+            dayOfWeek -= 7;
+        return urlForDay + dateUrlPart2[dayOfWeek - 1];
     }
 
     public void LoadData() {
