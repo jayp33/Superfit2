@@ -19,13 +19,14 @@ public class SuperfitParser {
 
     private List<SuperfitCourse> courseList = new ArrayList<>();
     private String url;
+    private int daysInTheFuture;
 
-    public SuperfitParser(String url, boolean useCurrentDay, boolean autoLoadData) {
+    public SuperfitParser(String url, int daysInTheFuture, boolean autoLoadData) {
         this.url = url;
+        this.daysInTheFuture = daysInTheFuture;
         if (!CheckUrlIsValid())
             throw new IllegalArgumentException("The supplied URL is not valid.");
-        if (useCurrentDay)
-            this.url = GetUrlForDay(this.url, 0);
+        this.url = GetUrlForDay(this.url, daysInTheFuture);
         if (autoLoadData)
             LoadData();
     }
@@ -69,8 +70,10 @@ public class SuperfitParser {
             throw new IllegalArgumentException("Days in the future must be between 0 and 6.");
         String[] dateUrlPart = {"/di", "/mi", "/do", "/fr", "/sa", "/so"};
         for (String dateAppendix : dateUrlPart) {
-            if (urlForDay.endsWith(dateAppendix))
-                throw new IllegalArgumentException("URL must not have Weekday appendix.");
+            if (urlForDay.endsWith(dateAppendix)) {
+                int position = urlForDay.lastIndexOf("/");
+                urlForDay = urlForDay.substring(0, position);
+            }
         }
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
