@@ -7,9 +7,18 @@ import java.util.Date;
  */
 public class SuperfitCourse {
 
+    private String location;
     private String type;
     private Date time;
     private String name;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getType() {
         return type;

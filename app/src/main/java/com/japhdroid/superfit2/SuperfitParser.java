@@ -116,6 +116,12 @@ public class SuperfitParser {
             } else if (url.contains("teamtrainingsplaene")) {
                 type = "Team";
             }
+            if (url.contains("berlin-friedrichshain"))
+                course.setLocation("FR");
+            else if (url.contains("berlin-mitte"))
+                course.setLocation("MI");
+            else
+                throw new IllegalArgumentException("Kursort nicht gefunden.");
             course.setType(type);
             course.setTime(parseTime(time, 0)); // TODO supply correct no of days
             course.setName(courseStr);
