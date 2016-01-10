@@ -72,7 +72,7 @@ public class SuperfitParserTest {
     @Test
     public void testCourseList() throws Exception {
         // Test requires network connection
-        SuperfitParser parser = new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain/do", false, true);
+        SuperfitParser parser = new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain/do", -1, true);
         List<SuperfitCourse> courseList = parser.getCourseList();
         Assert.assertTrue(courseList.size() > 0);
         for (SuperfitCourse course : courseList) {

@@ -26,7 +26,9 @@ public class SuperfitParser {
         this.daysInTheFuture = daysInTheFuture;
         if (!CheckUrlIsValid())
             throw new IllegalArgumentException("The supplied URL is not valid.");
-        this.url = GetUrlForDay(this.url, daysInTheFuture);
+        if (daysInTheFuture < 0)
+            this.daysInTheFuture = GetDaysInTheFuture(url);
+        this.url = GetUrlForDay(this.url, this.daysInTheFuture);
         if (autoLoadData)
             LoadData();
     }
@@ -63,6 +65,26 @@ public class SuperfitParser {
         }
 
         return false;
+    }
+
+    private int GetDaysInTheFuture(String url) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK); // 1 = sunday .. 7 = saturday
+        String[] dateUrlPart = {"PLACEHOLDER", "/so", "PLACEHOLDER", "/di", "/mi", "/do", "/fr", "/sa"};
+
+        int dateIndex = 2; // monday
+        for (int i = 0; i < dateUrlPart.length; i++) {
+            if (url.endsWith(dateUrlPart[i])) {
+                dateIndex = i;
+                break;
+            }
+        }
+
+        int _daysInTheFuture = dateIndex - dayOfWeek;
+        if (_daysInTheFuture < 0)
+            _daysInTheFuture += 7;
+        return _daysInTheFuture;
     }
 
     private String GetUrlForDay(String urlForDay, int daysInTheFuture) {
