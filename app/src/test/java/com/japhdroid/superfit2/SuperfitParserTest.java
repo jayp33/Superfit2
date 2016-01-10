@@ -104,6 +104,27 @@ public class SuperfitParserTest {
     }
 
     @Test
+    public void testParseFutureDate() throws Exception {
+        // Testing private method: Date parseTime(String time, int addNoOfDays)
+        int addNoOfDays = 1;
+        SuperfitParser parser = new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain/do", addNoOfDays, false);
+        Method method = SuperfitParser.class.getDeclaredMethod("parseTime", new Class[]{String.class, int.class});
+        method.setAccessible(true);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date(cal.getTimeInMillis() + addNoOfDays * (24 * 3600 * 1000)));
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Date actual = (Date) method.invoke(parser, "09:00", addNoOfDays);
+        cal.setTime(actual);
+        Assert.assertEquals(year, cal.get(Calendar.YEAR));
+        Assert.assertEquals(month, cal.get(Calendar.MONTH));
+        Assert.assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
+        Assert.assertEquals(9, cal.get(Calendar.HOUR_OF_DAY));
+        Assert.assertEquals(0, cal.get(Calendar.MINUTE));
+    }
+
+    @Test
     public void testGetUrlForAllDays() throws Exception {
         // Testing private method: String GetUrlForDay(String urlForDay, int daysInTheFuture)
         String baseUrl = "http://m.mysuperfit.com/kursplaene/berlin-friedrichshain";

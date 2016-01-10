@@ -123,8 +123,8 @@ public class SuperfitParser {
             else
                 throw new IllegalArgumentException("Kursort nicht gefunden.");
             course.setType(type);
-            course.setTime(parseTime(time, 0)); // TODO supply correct no of days
             course.setName(courseStr);
+            course.setTime(parseTime(time, daysInTheFuture));
             courseList.add(course);
         }
     }
