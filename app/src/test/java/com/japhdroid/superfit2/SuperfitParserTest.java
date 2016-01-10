@@ -78,7 +78,15 @@ public class SuperfitParserTest {
         for (SuperfitCourse course : courseList) {
             Assert.assertTrue(course.getType().equals("Kurs") || course.getType().equals("Team"));
             Assert.assertNotNull(course.getTime());
-            Assert.assertTrue(course.getName().endsWith(".jpg"));
+            boolean hasValidCourseName = false;
+            for (String courseName : SuperFitCourseMapping.name) {
+                if (course.getName().equalsIgnoreCase(courseName)) {
+                    hasValidCourseName = true;
+                    break;
+                }
+            }
+            Assert.assertTrue(hasValidCourseName);
+            Assert.assertTrue(course.getFilename().endsWith(".jpg"));
         }
     }
 */

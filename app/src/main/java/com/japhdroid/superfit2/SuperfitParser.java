@@ -145,8 +145,9 @@ public class SuperfitParser {
             else
                 throw new IllegalArgumentException("Kursort nicht gefunden.");
             course.setType(type);
-            course.setName(courseStr);
             course.setTime(parseTime(time, daysInTheFuture));
+            course.setName(SuperFitCourseMapping.getName(type, courseStr));
+            course.setFilename(courseStr);
             courseList.add(course);
         }
     }
