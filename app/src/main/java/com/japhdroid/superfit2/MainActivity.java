@@ -34,15 +34,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void doSomething(View view) {
-        SuperfitParser parser = new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain", 0, false);
-        new LoadData().execute(parser);
+        new LoadData().execute();
     }
 
     private class LoadData extends AsyncTask<SuperfitParser, Void, List<SuperfitCourse>> {
         @Override
         protected List<SuperfitCourse> doInBackground(SuperfitParser... params) {
-            params[0].LoadData();
-            return params[0].getCourseList();
+            return new SuperfitCourseCollection().getCourseCollection();
         }
 
         @Override
