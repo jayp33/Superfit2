@@ -1,11 +1,13 @@
 package com.japhdroid.superfit2;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,13 +30,27 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<String> myDataset = new ArrayList<>();
-        myDataset.add("Test 1");
-        myDataset.add("Test 2");
-        myDataset.add("Test 3");
+        doSomething(null);
+    }
 
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);
+    public void doSomething(View view) {
+        SuperfitParser parser = new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain", 0, false);
+        new LoadData().execute(parser);
+    }
+
+    private class LoadData extends AsyncTask<SuperfitParser, Void, List<SuperfitCourse>> {
+        @Override
+        protected List<SuperfitCourse> doInBackground(SuperfitParser... params) {
+            params[0].LoadData();
+            return params[0].getCourseList();
+        }
+
+        @Override
+        protected void onPostExecute(List<SuperfitCourse> courseList) {
+            if (courseList.size() > 0) {
+                mAdapter = new MyAdapter(courseList);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }
     }
 }

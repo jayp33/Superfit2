@@ -11,10 +11,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private ArrayList<String> mDataset;
+    private List<SuperfitCourse> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -32,18 +32,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     public void add(int position, String item) {
-        mDataset.add(position, item);
-        notifyItemInserted(position);
+//        mDataset.add(position, item);
+//        notifyItemInserted(position);
     }
 
     public void remove(String item) {
-        int position = mDataset.indexOf(item);
-        mDataset.remove(position);
-        notifyItemRemoved(position);
+//        int position = mDataset.indexOf(item);
+//        mDataset.remove(position);
+//        notifyItemRemoved(position);
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<String> myDataset) {
+    public MyAdapter(List<SuperfitCourse> myDataset) {
         mDataset = myDataset;
     }
 
@@ -63,8 +63,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String name = mDataset.get(position);
-        holder.txtHeader.setText(mDataset.get(position));
+        final String name = mDataset.get(position).getName() + " " +
+                mDataset.get(position).getTime().toString() + " " +
+                mDataset.get(position).getLocation();
+        holder.txtHeader.setText(mDataset.get(position).getName());
         holder.txtHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +74,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
         });
 
-        holder.txtFooter.setText("Footer: " + mDataset.get(position));
+        holder.txtFooter.setText(mDataset.get(position).getTime().toString() + " " +
+                mDataset.get(position).getLocation());
 
     }
 
