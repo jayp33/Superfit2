@@ -1,6 +1,7 @@
 package com.japhdroid.superfit2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class SuperfitCourseCollection {
         addListToCollection(new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-mitte", 0, true).getCourseList());
         addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte", 0, true).getCourseList());
 
+        Collections.sort(courseCollection);
         return courseCollection;
     }
 

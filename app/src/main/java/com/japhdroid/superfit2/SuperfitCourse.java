@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by User on 04.12.2015.
  */
-public class SuperfitCourse {
+public class SuperfitCourse implements Comparable<SuperfitCourse> {
 
     private String location;
     private String type;
@@ -51,5 +51,17 @@ public class SuperfitCourse {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    @Override
+    public int compareTo(SuperfitCourse another) {
+        if (time.getTime() == another.time.getTime())
+            if (type != another.type)
+                if (type == "Kurs")
+                    return -1;
+                else
+                    return 1;
+
+        return this.time.compareTo(another.getTime());
     }
 }
