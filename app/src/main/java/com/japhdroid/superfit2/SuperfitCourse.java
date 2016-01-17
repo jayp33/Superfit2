@@ -61,6 +61,8 @@ public class SuperfitCourse implements Comparable<SuperfitCourse> {
                     return -1;
                 else
                     return 1;
+            else
+                return this.getName().compareTo(another.getName());
 
         return this.time.compareTo(another.getTime());
     }
