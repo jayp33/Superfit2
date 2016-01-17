@@ -2,6 +2,7 @@ package com.japhdroid.superfit2;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +24,10 @@ public class SuperfitCourseCollection {
     }
 
     private void addListToCollection(List<SuperfitCourse> list) {
+        int msPerHour = 60 * 60 * 1000;
         for (SuperfitCourse course : list) {
-            courseCollection.add(course);
+            if (course.getTime().getTime() >= new Date().getTime() - msPerHour)
+                courseCollection.add(course);
         }
     }
 }
