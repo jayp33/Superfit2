@@ -18,6 +18,14 @@ public class SuperfitCourseCollection {
         addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-friedrichshain", 0, true).getCourseList());
         addListToCollection(new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-mitte", 0, true).getCourseList());
         addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte", 0, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain", 1, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-friedrichshain", 1, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-mitte", 1, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte", 1, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-friedrichshain", 2, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-friedrichshain", 2, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/kursplaene/berlin-mitte", 2, true).getCourseList());
+        addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte", 2, true).getCourseList());
 
         Collections.sort(courseCollection);
         return courseCollection;
