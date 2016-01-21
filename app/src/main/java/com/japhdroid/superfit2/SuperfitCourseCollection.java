@@ -11,6 +11,7 @@ import java.util.List;
 public class SuperfitCourseCollection {
 
     private List<SuperfitCourse> courseCollection;
+    private List<List<SuperfitCourse>> courseCollections;
 
     public List<SuperfitCourse> getCourseCollection() {
         courseCollection = new ArrayList<>();
@@ -28,7 +29,14 @@ public class SuperfitCourseCollection {
         addListToCollection(new SuperfitParser("http://m.mysuperfit.com/teamtrainingsplaene/berlin-mitte", 2, true).getCourseList());
 
         Collections.sort(courseCollection);
+        createCourseCollections();
+
         return courseCollection;
+    }
+
+    public List<List<SuperfitCourse>> getCourseCollections() {
+        getCourseCollection();
+        return courseCollections;
     }
 
     private void addListToCollection(List<SuperfitCourse> list) {
@@ -36,6 +44,24 @@ public class SuperfitCourseCollection {
         for (SuperfitCourse course : list) {
             if (course.getTime().getTime() >= new Date().getTime() - msPerHour)
                 courseCollection.add(course);
+        }
+    }
+
+    private void createCourseCollections() {
+        List<String> courses = new ArrayList<>();
+        for (SuperfitCourse course : courseCollection) {
+            if (!courses.contains(course.getName()))
+                courses.add(course.getName());
+        }
+        courseCollections = new ArrayList<>();
+        for (String name : courses) {
+            List<SuperfitCourse> tempList = new ArrayList<>();
+            for (SuperfitCourse course : courseCollection) {
+                if (course.getName().equalsIgnoreCase(name))
+                    tempList.add(course);
+            }
+            Collections.sort(tempList);
+            courseCollections.add(tempList);
         }
     }
 }
