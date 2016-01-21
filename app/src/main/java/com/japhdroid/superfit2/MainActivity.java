@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
         new LoadData().execute();
     }
 
-    private class LoadData extends AsyncTask<SuperfitParser, Void, List<SuperfitCourse>> {
+    private class LoadData extends AsyncTask<SuperfitParser, Void, List<List<SuperfitCourse>>> {
         @Override
-        protected List<SuperfitCourse> doInBackground(SuperfitParser... params) {
-            return new SuperfitCourseCollection().getCourseCollection();
+        protected List<List<SuperfitCourse>> doInBackground(SuperfitParser... params) {
+            return new SuperfitCourseCollection().getCourseCollections();
         }
 
         @Override
-        protected void onPostExecute(List<SuperfitCourse> courseList) {
+        protected void onPostExecute(List<List<SuperfitCourse>> courseList) {
             if (courseList.size() > 0) {
                 mAdapter = new MyAdapter(courseList);
                 mRecyclerView.setAdapter(mAdapter);
