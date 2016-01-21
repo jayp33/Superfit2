@@ -18,13 +18,13 @@ public class SuperFitCourseMapping {
             "ruecken.jpg", "trx.jpg", "circuit.jpg", "tsm.jpg", "bauch.jpg", "cardio.jpg",
             "trxbauch.jpg", "stretch.jpg", "ruecken.jpg", "po.jpg", "fullbodyworkout.jpg"};
 
-    static final String[] name = {"SuperFit Bauch Beine Po", "SuperFit Pilates", "LesMills BodyVive",
-            "LesMills BodyPump Express", "LesMills BodyAttack", "LesMills BodyStep",
-            "LesMills BodyPump", "LesMills BodyBalance", "LesMills Sh'Bam", "SuperFit Bauch Express",
-            "Zumba Fitness", "LesMills Grit Plyo", "LesMills BodyCombat", "SuperFit Yoga",
-            "LesMills LmiStep", "SuperFit Rücken", "TRX", "SuperFit Circuit",
-            "SuperFit Trainingsstart", "SuperFit Bauch", "SuperFit Cardio", "TRX Bauch",
-            "SuperFit Stretch", "SuperFit Rücken", "SuperFit Po", "SuperFit Full Body Workout"};
+    static final String[] name = {"Bauch Beine Po (SuperFit)", "Pilates (SuperFit)", "BodyVive (LesMills)",
+            "BodyPump Express (LesMills)", "BodyAttack (LesMills)", "BodyStep (LesMills)",
+            "BodyPump (LesMills)", "BodyBalance (LesMills)", "Sh'Bam (LesMills)", "Bauch Express (SuperFit)",
+            "Zumba Fitness", "Grit Plyo (LesMills)", "BodyCombat (LesMills)", "Yoga (SuperFit)",
+            "LmiStep (LesMills)", "Rücken (SuperFit)", "TRX", "Circuit (SuperFit)",
+            "Trainingsstart (SuperFit)", "Bauch (SuperFit)", "Cardio (SuperFit)", "TRX Bauch",
+            "Stretch (SuperFit)", "Rücken (SuperFit)", "Po (SuperFit)", "Full Body Workout (SuperFit)"};
 
     public static String getName(String _type, String _filename) {
         ArrayList<Integer> indices = new ArrayList<>();
