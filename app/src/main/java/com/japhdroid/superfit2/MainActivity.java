@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private List<List<SuperfitCourse>> courseListByTime;
+    private List<List<SuperfitCourse>> courseListByName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +42,54 @@ public class MainActivity extends AppCompatActivity {
         new LoadData().execute();
     }
 
-    private class LoadData extends AsyncTask<SuperfitParser, Void, List<List<SuperfitCourse>>> {
+    public void showByTime(View view) {
+        if (courseListByTime.size() > 0) {
+            mAdapter = new MyAdapter(courseListByTime);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
+    public void showByName(View view) {
+        if (courseListByName.size() > 0) {
+            mAdapter = new MyAdapter(courseListByName);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
+    private class LoadData extends AsyncTask<SuperfitParser, Void, String> {
         @Override
-        protected List<List<SuperfitCourse>> doInBackground(SuperfitParser... params) {
-            return new SuperfitCourseCollection().getCourseCollections();
+        protected String doInBackground(SuperfitParser... params) {
+            courseListByTime = new SuperfitCourseCollection().getCourseCollections();
+            sortCourseListByName(courseListByTime);
+            return null;
+        }
+
+        private void sortCourseListByName(List<List<SuperfitCourse>> courseListByTime) {
+            List<String> courseNames = new ArrayList<>();
+            for (List<SuperfitCourse> courseList : courseListByTime) {
+                if (!courseNames.contains(courseList.get(0).getName()))
+                    courseNames.add(courseList.get(0).getName());
+            }
+            Collections.sort(courseNames);
+            courseListByName = new ArrayList<>();
+            for (String courseName : courseNames) {
+                for (List<SuperfitCourse> courseList : courseListByTime) {
+                    if (courseList.get(0).getName().equals(courseName))
+                        courseListByName.add(courseList);
+                }
+            }
         }
 
         @Override
-        protected void onPostExecute(List<List<SuperfitCourse>> courseList) {
-            if (courseList.size() > 0) {
-                mAdapter = new MyAdapter(courseList);
+        protected void onPostExecute(String dummy) {
+            if (courseListByName.size() > 0) {
+                mAdapter = new MyAdapter(courseListByName);
                 mRecyclerView.setAdapter(mAdapter);
             }
+            Button btn = (Button) findViewById(R.id.name_btn);
+            btn.setEnabled(true);
+            btn = (Button) findViewById(R.id.time_btn);
+            btn.setEnabled(true);
         }
     }
 }
