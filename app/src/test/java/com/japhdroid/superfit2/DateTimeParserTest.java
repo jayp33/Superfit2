@@ -20,4 +20,13 @@ public class DateTimeParserTest {
         cal.set(2015, 2, 6, 12, 6, 2);
         assertEquals(cal.getTime(), parsedDate);
     }
+
+    @Test
+    public void testGetTimeFromString() throws Exception {
+        Date parsedDate = DateTimeParser.getTimeFromString("2015-03-06T12:30:00Z");
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(1970, 0, 1, 12, 30, 0);
+        assertEquals(cal.getTime(), parsedDate);
+    }
 }

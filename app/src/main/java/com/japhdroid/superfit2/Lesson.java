@@ -32,4 +32,28 @@ public class Lesson {
     enum Weekday {
         MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public Studio getStudio() {
+        return studio;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public Capacity getCapacity() {
+        return capacity;
+    }
+
+    public Weekday getWeekday() {
+        return weekday;
+    }
+
+    public Date getStarttime() {
+        return starttime;
+    }
 }

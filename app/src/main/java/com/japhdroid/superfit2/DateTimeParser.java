@@ -22,4 +22,18 @@ public class DateTimeParser {
         }
         return dateFromString;
     }
+
+    static Date getTimeFromString(String dateTimeString) {
+        Date timeFromString = null;
+        dateTimeString = dateTimeString.substring(dateTimeString.indexOf("T") + 1);
+        dateTimeString = dateTimeString.substring(0, 5);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        try {
+            timeFromString = simpleDateFormat.parse(dateTimeString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return timeFromString;
+    }
 }
