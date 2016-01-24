@@ -4,8 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,25 +50,11 @@ public class Courses {
                 int duration = element.getInt("duration");
                 String imageUrl = "http://superfit.navillo.de" + element.getString("image_url");
                 String imageUpdatedAt = element.getString("image_updated_at");
-                Date imageUpdatedAt_asDate = getDateFromString(imageUpdatedAt);
+                Date imageUpdatedAt_asDate = DateTimeParser.getDateFromString(imageUpdatedAt);
                 courses.add(new Course(id, title, description, floor_asFloor, duration, imageUrl, imageUpdatedAt_asDate));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private Date getDateFromString(String imageUpdatedAt) {
-        Date dateFromString = null;
-        imageUpdatedAt = imageUpdatedAt.replace("T", " ");
-        imageUpdatedAt = imageUpdatedAt.replace("Z", "");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            dateFromString = simpleDateFormat.parse(imageUpdatedAt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return dateFromString;
     }
 }
