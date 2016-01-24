@@ -24,13 +24,13 @@ public class LessonsTest {
 
     @Test
     public void testLessonCount() throws Exception {
-        List<Lesson> lessons = new Lessons(TestDataProvider.lessons_studio_3, studios, courses).getLessons();
+        List<Lesson> lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3}, studios, courses).getLessons();
         assertEquals(151, lessons.size());
     }
 
     @Test
     public void testLessonId_220_IsCorrect() throws Exception {
-        Lessons lessons = new Lessons(TestDataProvider.lessons_studio_3, studios, courses);
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3}, studios, courses);
         Lesson lesson = lessons.getLessonById(220);
         assertEquals("SUPERFIT Friedrichshain", lesson.getStudio().getTitle());
         assertEquals("BODYPUMP", lesson.getCourse().getTitle());
@@ -41,5 +41,29 @@ public class LessonsTest {
         cal.setTimeInMillis(0);
         cal.set(1970, 0, 1, 11, 0, 0);
         assertEquals(cal.getTime(), lesson.getStarttime());
+    }
+
+    @Test
+    public void testGetLessonsForSingleStudio() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        assertEquals(306, lessons.getLessons().size());
+        List<Lesson> _lessons = lessons.getLessons(new Studio[]{studios.getStudioById(3)});
+        assertEquals(151, _lessons.size());
+        for (Lesson lesson : _lessons)
+            assertEquals(3, lesson.getStudio().getId());
+        _lessons = lessons.getLessons(new Studio[]{studios.getStudioById(5)});
+        assertEquals(155, _lessons.size());
+        for (Lesson lesson : _lessons)
+            assertEquals(5, lesson.getStudio().getId());
+    }
+
+    @Test
+    public void testGetLessonsForMultipleStudios() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        assertEquals(306, lessons.getLessons().size());
+        List<Lesson> _lessons = lessons.getLessons(new Studio[]{studios.getStudioById(3), studios.getStudioById(5)});
+        assertEquals(306, _lessons.size());
     }
 }

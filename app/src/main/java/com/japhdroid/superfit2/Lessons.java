@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class Lessons {
 
-    private String data;
+    private String[] data;
     private List<Lesson> lessons;
     private Studios studios;
     private Courses courses;
 
-    public Lessons(String data, Studios studios, Courses courses) {
+    public Lessons(String[] data, Studios studios, Courses courses) {
         this.data = data;
         this.studios = studios;
         this.courses = courses;
@@ -38,8 +38,13 @@ public class Lessons {
 
     private void createLessons() {
         lessons = new ArrayList<>();
+        for (String _data : data)
+            createLessons(_data);
+    }
+
+    private void createLessons(String _data) {
         try {
-            JSONArray json = new JSONArray(data);
+            JSONArray json = new JSONArray(_data);
             for (int i = 0; i < json.length(); i++) {
                 JSONObject element = json.getJSONObject(i);
                 int id = element.getInt("id");
@@ -88,5 +93,14 @@ public class Lessons {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Lesson> getLessons(Studio[] studios) {
+        List<Lesson> _lessons = new ArrayList<>();
+        for (Lesson lesson : lessons)
+            for (Studio studio : studios)
+                if (lesson.getStudio().getId() == studio.getId())
+                    _lessons.add(lesson);
+        return _lessons;
     }
 }
