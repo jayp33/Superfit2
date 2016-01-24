@@ -28,4 +28,32 @@ public class Course {
     enum Floor {
         KURS, TEAMTRAINING
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Date getImageUpdatedAt() {
+        return imageUpdatedAt;
+    }
 }
