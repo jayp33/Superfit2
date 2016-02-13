@@ -89,11 +89,33 @@ public class Lessons {
                     case 3:
                         capacity_asCapacity = Lesson.Capacity.RED;
                 }
-                lessons.add(new Lesson(id, studio, course, capacity_asCapacity, starttime_asDate, weekday_asWeekday));
+                String updatedAt = element.getString("updated_at");
+                Date updatedAt_asDate = DateTimeParser.getDateFromString(updatedAt);
+                Lesson newLesson = new Lesson(id, studio, course, capacity_asCapacity, starttime_asDate, weekday_asWeekday, updatedAt_asDate);
+                int conflictingLessonIndex = getConflictingLessonIndex(newLesson);
+                if (conflictingLessonIndex >= 0) {
+                    Lesson conflictingLesson = lessons.get(conflictingLessonIndex);
+                    if (newLesson.getUpdatedAt().getTime() > conflictingLesson.getUpdatedAt().getTime()) {
+                        lessons.remove(conflictingLessonIndex);
+                        lessons.add(newLesson);
+                    }
+                } else
+                    lessons.add(newLesson);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private int getConflictingLessonIndex(Lesson newLesson) {
+        for (int i = 0; i < lessons.size(); i++) {
+            Lesson conflictingLesson = lessons.get(i);
+            if ((conflictingLesson.getStudio().getId() == newLesson.getStudio().getId()) &&
+                    (conflictingLesson.getCourse().getFloor().ordinal() == newLesson.getCourse().getFloor().ordinal()) &&
+                    (conflictingLesson.getStarttimeExact().getTime() == newLesson.getStarttimeExact().getTime()))
+                return i;
+        }
+        return -1;
     }
 
     public List<Lesson> getLessons(Studio[] studios) {

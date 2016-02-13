@@ -14,16 +14,18 @@ public class Lesson implements Comparable<Lesson> {
     private Capacity capacity; // 1 = green, 2 = yellow, 3 = red
     private Weekday weekday; // 1 = Sunday .. 7 = Saturday
     private Date starttime; // ignore Date, use Time in combination with weekday
+    private Date updatedAt;
     private Date starttimeExact;
     private Date endtime;
 
-    public Lesson(int id, Studio studio, Course course, Capacity capacity, Date starttime, Weekday weekday) {
+    public Lesson(int id, Studio studio, Course course, Capacity capacity, Date starttime, Weekday weekday, Date updatedAt) {
         this.id = id;
         this.studio = studio;
         this.course = course;
         this.capacity = capacity;
         this.weekday = weekday;
         this.starttime = starttime;
+        this.updatedAt = updatedAt;
         calculateExactTimes();
     }
 
@@ -66,6 +68,10 @@ public class Lesson implements Comparable<Lesson> {
 
     public Date getStarttime() {
         return starttime;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
     public Date getStarttimeExact() {
