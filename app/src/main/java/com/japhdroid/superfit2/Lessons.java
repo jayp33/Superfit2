@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -56,25 +57,25 @@ public class Lessons {
                 Lesson.Weekday weekday_asWeekday = null;
                 switch (weekday) {
                     case 0:
-                        weekday_asWeekday = Lesson.Weekday.MONDAY;
+                        weekday_asWeekday = Lesson.Weekday.SUNDAY;
                         break;
                     case 1:
-                        weekday_asWeekday = Lesson.Weekday.TUESDAY;
+                        weekday_asWeekday = Lesson.Weekday.MONDAY;
                         break;
                     case 2:
-                        weekday_asWeekday = Lesson.Weekday.WEDNESDAY;
+                        weekday_asWeekday = Lesson.Weekday.TUESDAY;
                         break;
                     case 3:
-                        weekday_asWeekday = Lesson.Weekday.THURSDAY;
+                        weekday_asWeekday = Lesson.Weekday.WEDNESDAY;
                         break;
                     case 4:
-                        weekday_asWeekday = Lesson.Weekday.FRIDAY;
+                        weekday_asWeekday = Lesson.Weekday.THURSDAY;
                         break;
                     case 5:
-                        weekday_asWeekday = Lesson.Weekday.SATURDAY;
+                        weekday_asWeekday = Lesson.Weekday.FRIDAY;
                         break;
                     case 6:
-                        weekday_asWeekday = Lesson.Weekday.SUNDAY;
+                        weekday_asWeekday = Lesson.Weekday.SATURDAY;
                 }
                 int capacity = element.getInt("capacity");
                 Lesson.Capacity capacity_asCapacity = null;
@@ -102,5 +103,16 @@ public class Lessons {
                 if (lesson.getStudio().getId() == studio.getId())
                     _lessons.add(lesson);
         return _lessons;
+    }
+
+    public List<Lesson> getLessons(Studio[] studios, boolean futureCourses) {
+        List<Lesson> _lessons = getLessons(studios);
+        if (futureCourses)
+            Collections.sort(_lessons);
+        return _lessons;
+    }
+
+    public List<Lesson> getLessons(Studio[] studios, boolean futureCourses, boolean includeRunning) {
+        return null; //TODO implement
     }
 }

@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by User on 24.01.2016.
@@ -35,7 +36,7 @@ public class LessonsTest {
         assertEquals("SUPERFIT Friedrichshain", lesson.getStudio().getTitle());
         assertEquals("BODYPUMP", lesson.getCourse().getTitle());
         assertEquals(Lesson.Capacity.GREEN, lesson.getCapacity());
-        assertEquals(Lesson.Weekday.FRIDAY, lesson.getWeekday());
+        assertEquals(Lesson.Weekday.THURSDAY, lesson.getWeekday());
         // "starttime":"2012-10-12T11:00:00Z"
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(0);
@@ -65,5 +66,21 @@ public class LessonsTest {
         assertEquals(306, lessons.getLessons().size());
         List<Lesson> _lessons = lessons.getLessons(new Studio[]{studios.getStudioById(3), studios.getStudioById(5)});
         assertEquals(306, _lessons.size());
+    }
+
+    @Test
+    public void testGetFutureLessonsForSingleStudio() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3}, studios, courses);
+        assertEquals(136, lessons.getLessons().size());
+        List<Lesson> _lessons = lessons.getLessons(new Studio[]{studios.getStudioById(3)}, true);
+        for (int i = 0; i < _lessons.size() - 1; i++) {
+            boolean actual = false;
+            if (_lessons.get(i+1).getStarttimeExact().getTime() > _lessons.get(i).getStarttimeExact().getTime())
+                actual=true;
+            if (_lessons.get(i+1).getStarttimeExact().getTime() == _lessons.get(i).getStarttimeExact().getTime())
+                if (_lessons.get(i+1).getCourse().getFloor() == Course.Floor.TEAMTRAINING)
+                    actual=true;
+            assertTrue(actual);
+        }
     }
 }
