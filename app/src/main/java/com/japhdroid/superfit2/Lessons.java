@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -52,31 +53,33 @@ public class Lessons {
                 Studio studio = studios.getStudioById(element.getInt("studio_id"));
                 Course course = courses.getCourseById(element.getInt("course_id"));
                 String starttime = element.getString("starttime");
-                Date starttime_asDate = DateTimeParser.getTimeFromString(starttime);
-                int weekday = element.getInt("weekday");
+                Date starttime_asDate = DateTimeParser.getDateFromString(starttime);
+                Calendar starttimeCal = Calendar.getInstance();
+                starttimeCal.setTime(starttime_asDate);
                 Lesson.Weekday weekday_asWeekday = null;
-                switch (weekday) {
-                    case 0:
+                switch (starttimeCal.get(Calendar.DAY_OF_WEEK)) {
+                    case 1:
                         weekday_asWeekday = Lesson.Weekday.SUNDAY;
                         break;
-                    case 1:
+                    case 2:
                         weekday_asWeekday = Lesson.Weekday.MONDAY;
                         break;
-                    case 2:
+                    case 3:
                         weekday_asWeekday = Lesson.Weekday.TUESDAY;
                         break;
-                    case 3:
+                    case 4:
                         weekday_asWeekday = Lesson.Weekday.WEDNESDAY;
                         break;
-                    case 4:
+                    case 5:
                         weekday_asWeekday = Lesson.Weekday.THURSDAY;
                         break;
-                    case 5:
+                    case 6:
                         weekday_asWeekday = Lesson.Weekday.FRIDAY;
                         break;
-                    case 6:
+                    case 7:
                         weekday_asWeekday = Lesson.Weekday.SATURDAY;
                 }
+                starttime_asDate = DateTimeParser.getTimeFromString(starttime);
                 int capacity = element.getInt("capacity");
                 Lesson.Capacity capacity_asCapacity = null;
                 switch (capacity) {
@@ -112,10 +115,18 @@ public class Lessons {
             Lesson conflictingLesson = lessons.get(i);
             if ((conflictingLesson.getStudio().getId() == newLesson.getStudio().getId()) &&
                     (conflictingLesson.getCourse().getFloor().ordinal() == newLesson.getCourse().getFloor().ordinal()) &&
-                    (conflictingLesson.getStarttimeExact().getTime() == newLesson.getStarttimeExact().getTime()))
+                    lessonTimesAreOverlapping(newLesson, conflictingLesson))
                 return i;
         }
         return -1;
+    }
+
+    private boolean lessonTimesAreOverlapping(Lesson lesson1, Lesson lesson2) {
+        long starttimeLesson1Millis = lesson1.getStarttimeExact().getTime();
+        long endtimeLesson1Millis = starttimeLesson1Millis + (lesson1.getCourse().getDuration() * 60 * 1000);
+        long starttimeLesson2Millis = lesson2.getStarttimeExact().getTime();
+        long endtimeLesson2Millis = starttimeLesson2Millis + (lesson2.getCourse().getDuration() * 60 * 1000);
+        return starttimeLesson1Millis < endtimeLesson2Millis && starttimeLesson2Millis < endtimeLesson1Millis;
     }
 
     public List<Lesson> getLessons(Studio[] studios) {

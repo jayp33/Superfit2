@@ -36,7 +36,7 @@ public class LessonsTest {
         assertEquals("SUPERFIT Friedrichshain", lesson.getStudio().getTitle());
         assertEquals("BODYPUMP", lesson.getCourse().getTitle());
         assertEquals(Lesson.Capacity.GREEN, lesson.getCapacity());
-        assertEquals(Lesson.Weekday.THURSDAY, lesson.getWeekday());
+        assertEquals(Lesson.Weekday.FRIDAY, lesson.getWeekday());
         // "starttime":"2012-10-12T11:00:00Z"
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(0);
