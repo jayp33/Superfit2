@@ -83,6 +83,18 @@ public class Lesson implements Comparable<Lesson> {
     }
 
     @Override
+    public String toString() {
+        String starttimeStr = starttime.toString().substring(11, 19);
+        return id +
+                ",studio=" + studio.getId() +
+                "," + course.getId() + ":" + course.getTitle() +
+                "," + course.getFloor() +
+                "," + capacity +
+                "," + weekday +
+                "," + starttimeStr;
+    }
+
+    @Override
     public int compareTo(Lesson another) {
         if (starttimeExact.getTime() == another.starttimeExact.getTime())
             if (course.getFloor() != another.course.getFloor())
