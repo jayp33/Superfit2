@@ -115,7 +115,7 @@ public class Lesson implements Comparable<Lesson> {
         int daysInTheFuture = weekday.getValue() - dayOfWeek;
         if (daysInTheFuture < 0)
             daysInTheFuture += 7;
-        cal.setTimeInMillis(new Date().getTime() + (daysInTheFuture * 24 * 60 * 60 * 1000)) ;
+        cal.setTimeInMillis(new Date().getTime() + (daysInTheFuture * 24 * 60 * 60 * 1000));
         Calendar lessonCal = Calendar.getInstance();
         lessonCal.setTime(starttime);
         int year = cal.get(Calendar.YEAR);

@@ -85,11 +85,11 @@ public class LessonsTest {
         List<Lesson> _lessons = lessons.getLessons(new Studio[]{studios.getStudioById(3)}, true);
         for (int i = 0; i < _lessons.size() - 1; i++) {
             boolean actual = false;
-            if (_lessons.get(i+1).getStarttimeExact().getTime() > _lessons.get(i).getStarttimeExact().getTime())
-                actual=true;
-            if (_lessons.get(i+1).getStarttimeExact().getTime() == _lessons.get(i).getStarttimeExact().getTime())
-                if (_lessons.get(i+1).getCourse().getFloor() == Course.Floor.TEAMTRAINING)
-                    actual=true;
+            if (_lessons.get(i + 1).getStarttimeExact().getTime() > _lessons.get(i).getStarttimeExact().getTime())
+                actual = true;
+            if (_lessons.get(i + 1).getStarttimeExact().getTime() == _lessons.get(i).getStarttimeExact().getTime())
+                if (_lessons.get(i + 1).getCourse().getFloor() == Course.Floor.TEAMTRAINING)
+                    actual = true;
             assertTrue(actual);
         }
     }
