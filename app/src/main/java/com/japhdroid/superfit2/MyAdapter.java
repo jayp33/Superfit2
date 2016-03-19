@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Map;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private List<List<SuperfitCourse>> mDataset;
+    private Map<Course, List<Lesson>> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -43,7 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<List<SuperfitCourse>> myDataset) {
+    public MyAdapter(Map<Course, List<Lesson>> myDataset) {
         mDataset = myDataset;
     }
 
@@ -63,9 +64,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        List<SuperfitCourse> _list = mDataset.get(position);
-        final String name = _list.get(0).getName();
-        holder.txtHeader.setText(_list.get(0).getName());
+        Object key = mDataset.keySet().toArray()[position];
+        List<Lesson> _list = mDataset.get(key);
+        final String name = _list.get(0).getCourse().getTitle();
+        holder.txtHeader.setText(_list.get(0).getCourse().getTitle());
         holder.txtHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,10 +77,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         String times = "";
         int count = 0;
-        for (SuperfitCourse course : _list) {
+        for (Lesson course : _list) {
             if (!times.equals(""))
                 times += "\n";
-            times += course.getLocation() + " " + course.getTime().toString();
+            times += course.getStudio().getId() + " " + course.getStarttimeExact().toString();
             if (++count > 3)
                 break;
         }

@@ -8,17 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<List<SuperfitCourse>> courseListByTime;
-    private List<List<SuperfitCourse>> courseListByName;
+    private Map<Course, List<Lesson>> lessonsByTime;
+    private Map<Course, List<Lesson>> lessonsByName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,53 +43,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showByTime(View view) {
-        if (courseListByTime.size() > 0) {
-            mAdapter = new MyAdapter(courseListByTime);
+        if (lessonsByTime.size() > 0) {
+            mAdapter = new MyAdapter(lessonsByTime);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
     public void showByName(View view) {
-        if (courseListByName.size() > 0) {
-            mAdapter = new MyAdapter(courseListByName);
+        if (lessonsByName.size() > 0) {
+            mAdapter = new MyAdapter(lessonsByName);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
-    private class LoadData extends AsyncTask<SuperfitParser, Void, String> {
+    private class LoadData extends AsyncTask<Void, Void, String> {
         @Override
-        protected String doInBackground(SuperfitParser... params) {
-            courseListByTime = new SuperfitCourseCollection().getCourseCollections();
-            sortCourseListByName(courseListByTime);
+        protected String doInBackground(Void... params) {
+//            courseListByTime = new SuperfitCourseCollection().getCourseCollections();
+//            sortCourseListByName(courseListByTime);
+            Map urls = new HashMap<DataProvider.DataType, String[]>();
+            urls.put(DataProvider.DataType.STUDIOS, new String[]{"http://superfit.navillo.de/api/v3/studios.json"});
+            urls.put(DataProvider.DataType.COURSES, new String[]{"http://superfit.navillo.de/api/v3/courses.json"});
+            urls.put(DataProvider.DataType.LESSONS, new String[]{"http://superfit.navillo.de/api/v3/lessons.json?studio_id=3",
+                    "http://superfit.navillo.de/api/v3/lessons.json?studio_id=5"});
+            DataProvider.LoadData(urls);
             return null;
         }
 
-        private void sortCourseListByName(List<List<SuperfitCourse>> courseListByTime) {
-            List<String> courseNames = new ArrayList<>();
-            for (List<SuperfitCourse> courseList : courseListByTime) {
-                if (!courseNames.contains(courseList.get(0).getName()))
-                    courseNames.add(courseList.get(0).getName());
-            }
-            Collections.sort(courseNames);
-            courseListByName = new ArrayList<>();
-            for (String courseName : courseNames) {
-                for (List<SuperfitCourse> courseList : courseListByTime) {
-                    if (courseList.get(0).getName().equals(courseName))
-                        courseListByName.add(courseList);
-                }
-            }
+        private void sortCourseListByName(Map<String, List<Lesson>> courseListByTime) {
+//            List<String> courseNames = new ArrayList<>();
+//            for (List<Lesson> courseList : courseListByTime) {
+//                if (!courseNames.contains(courseList.get(0).getCourse().getTitle()))
+//                    courseNames.add(courseList.get(0).getCourse().getTitle());
+//            }
+//            Collections.sort(courseNames);
+//            courseListByName = new ArrayList<>();
+//            for (String courseName : courseNames) {
+//                for (List<Lesson> courseList : courseListByTime) {
+//                    if (courseList.get(0).getCourse().getTitle().equals(courseName))
+//                        courseListByName.add(courseList);
+//                }
+//            }
         }
 
         @Override
         protected void onPostExecute(String dummy) {
-            if (courseListByName.size() > 0) {
-                mAdapter = new MyAdapter(courseListByName);
+            if (DataProvider.getLessons().getLessons().size() > 0) {
+                mAdapter = new MyAdapter(DataProvider.getLessons().getLessonCollections());
                 mRecyclerView.setAdapter(mAdapter);
             }
-            Button btn = (Button) findViewById(R.id.name_btn);
-            btn.setEnabled(true);
-            btn = (Button) findViewById(R.id.time_btn);
-            btn.setEnabled(true);
+//            Button btn = (Button) findViewById(R.id.name_btn);
+//            btn.setEnabled(true);
+//            btn = (Button) findViewById(R.id.time_btn);
+//            btn.setEnabled(true);
         }
     }
 }
