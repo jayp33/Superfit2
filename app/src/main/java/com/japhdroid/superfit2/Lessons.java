@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by User on 24.01.2016.
@@ -17,6 +19,7 @@ public class Lessons {
 
     private String[] data;
     private List<Lesson> lessons;
+    private Map<Course, List<Lesson>> lessonCollections;
     private Studios studios;
     private Courses courses;
 
@@ -25,10 +28,26 @@ public class Lessons {
         this.studios = studios;
         this.courses = courses;
         createLessons();
+        createLessonCollections();
+    }
+
+    private void createLessonCollections() {
+        lessonCollections = new HashMap<Course, List<Lesson>>();
+        for (Lesson lesson : lessons) {
+            Course course = lesson.getCourse();
+            if (!lessonCollections.containsKey(course))
+                lessonCollections.put(course, new ArrayList<Lesson>());
+            List<Lesson> lessonCollection = lessonCollections.get(course);
+            lessonCollection.add(lesson);
+        }
     }
 
     public List<Lesson> getLessons() {
         return lessons;
+    }
+
+    public Map<Course, List<Lesson>> getLessonCollections() {
+        return lessonCollections;
     }
 
     public Lesson getLessonById(int id) {

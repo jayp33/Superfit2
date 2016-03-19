@@ -25,6 +25,11 @@ public class Course {
         this.imageUpdatedAt = imageUpdatedAt;
     }
 
+    @Override
+    public String toString() {
+        return title;
+    }
+
     enum Floor {
         KURS, TEAMTRAINING
     }
