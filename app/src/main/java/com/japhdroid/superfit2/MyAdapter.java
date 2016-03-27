@@ -81,13 +81,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         });
 
         boolean firstItem = true;
+        int i = 0;
         LayoutInflater inflater = LayoutInflater.from(adapterContext);
         for (Lesson lesson : _list) {
             if (firstItem)
                 holder.course.removeAllViews();
             firstItem = false;
-            if (DateTimeParser.getDaysInTheFutureCount(lesson.getStarttimeExact()) > 2)
-                continue;
+            if (i > 4)
+                break;
             View inflatedLayout = inflater.inflate(R.layout.lesson_layout, holder.course, false);
             holder.course.addView(inflatedLayout);
             View capacity = inflatedLayout.findViewById(R.id.lessonCapacity);
@@ -119,6 +120,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     break;
             }
             futureDays.setText(DateTimeParser.getDaysInTheFuture(lesson.getStarttimeExact()));
+            i++;
         }
     }
 
