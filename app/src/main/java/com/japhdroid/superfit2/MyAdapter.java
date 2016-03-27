@@ -80,8 +80,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
         });
 
+        boolean firstItem = true;
         LayoutInflater inflater = LayoutInflater.from(adapterContext);
         for (Lesson lesson : _list) {
+            if (firstItem)
+                holder.course.removeAllViews();
+            firstItem = false;
             if (DateTimeParser.getDaysInTheFutureCount(lesson.getStarttimeExact()) > 2)
                 continue;
             View inflatedLayout = inflater.inflate(R.layout.lesson_layout, holder.course, false);
