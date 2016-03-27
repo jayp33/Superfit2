@@ -2,6 +2,7 @@ package com.japhdroid.superfit2;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -35,5 +36,41 @@ public class DateTimeParser {
             return null;
         }
         return timeFromString;
+    }
+
+    static String getTimeStringFromDate(Date date) {
+        return date.toString().substring(11, 16);
+    }
+
+    static String getDaysInTheFuture(Date date) {
+        String result = "";
+        int daysInTheFuture = getDaysInTheFutureCount(date);
+        switch (daysInTheFuture) {
+            case 0:
+                break;
+            case 1:
+                result = "■";
+                break;
+            case 2:
+                result = "■■";
+                break;
+            default:
+                result = "+" + daysInTheFuture;
+        }
+        return result;
+    }
+
+    static int getDaysInTheFutureCount(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK); // 1 = sunday .. 7 = saturday
+        cal.setTime(date);
+        int dayOfSuppliedWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+        int daysInTheFuture = dayOfSuppliedWeek - dayOfWeek;
+        if (daysInTheFuture < 0)
+            daysInTheFuture += 7;
+
+        return daysInTheFuture;
     }
 }

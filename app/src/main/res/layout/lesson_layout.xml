@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="55dp"
+    android:layout_height="40dp"
+    android:layout_marginRight="10dp"
+    tools:background="#eee"
+    tools:layout_height="50dp"
+    tools:layout_width="100dp">
+
+    <TextView
+        android:id="@+id/lessonLocation"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        tools:text="Location" />
+
+    <TextView
+        android:id="@+id/lessonFutureDays"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/lessonLocation"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/lessonCapacity"
+        android:layout_width="7dp"
+        android:layout_height="20dp"
+        android:layout_above="@id/lessonLocation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        tools:background="@android:color/holo_red_light" />
+
+    <TextView
+        android:id="@+id/lessonStarttime"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_above="@id/lessonLocation"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/lessonCapacity"
+        android:background="#D8E0E3"
+        android:gravity="center"
+        android:textStyle="bold"
+        tools:text="Starttime" />
+
+</RelativeLayout>

@@ -44,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void showByTime(View view) {
         if (lessonsByTime.size() > 0) {
-            mAdapter = new MyAdapter(lessonsByTime);
+            mAdapter = new MyAdapter(MainActivity.this, lessonsByTime);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
     public void showByName(View view) {
         if (lessonsByName.size() > 0) {
-            mAdapter = new MyAdapter(lessonsByName);
+            mAdapter = new MyAdapter(MainActivity.this, lessonsByName);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String dummy) {
             if (DataProvider.getLessons().getLessons().size() > 0) {
-                mAdapter = new MyAdapter(DataProvider.getLessons().getLessonCollections());
+                mAdapter = new MyAdapter(MainActivity.this, DataProvider.getLessons().getLessonCollections());
                 mRecyclerView.setAdapter(mAdapter);
             }
 //            Button btn = (Button) findViewById(R.id.name_btn);
