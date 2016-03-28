@@ -61,6 +61,7 @@ public class Lessons {
         lessons = new ArrayList<>();
         for (String _data : data)
             createLessons(_data);
+        Collections.sort(lessons);
     }
 
     private void createLessons(String _data) {

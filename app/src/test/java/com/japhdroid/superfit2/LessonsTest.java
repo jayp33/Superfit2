@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -91,6 +92,26 @@ public class LessonsTest {
                 if (_lessons.get(i + 1).getCourse().getFloor() == Course.Floor.TEAMTRAINING)
                     actual = true;
             assertTrue(actual);
+        }
+    }
+
+    @Test
+    public void testLessonCollectionSorting() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        Map<Course, List<Lesson>> collections = lessons.getLessonCollections();
+        for (int i = 0; i < collections.size(); i++) {
+            Object key = collections.keySet().toArray()[i];
+            List<Lesson> collection = collections.get(key);
+            for (int j = 0; j < collection.size() - 1; j++) {
+                boolean actual = false;
+                if (collection.get(j + 1).getStarttimeExact().getTime() > collection.get(j).getStarttimeExact().getTime())
+                    actual = true;
+                if (collection.get(j + 1).getStarttimeExact().getTime() == collection.get(j).getStarttimeExact().getTime())
+                    if (collection.get(j + 1).getStudio().getId() > collection.get(j).getStudio().getId())
+                        actual = true;
+                assertTrue(actual);
+            }
         }
     }
 }
