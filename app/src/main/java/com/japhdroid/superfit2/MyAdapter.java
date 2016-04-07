@@ -110,6 +110,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     break;
             }
             starttime.setText(DateTimeParser.getTimeStringFromDate(lesson.getStarttime()));
+            setBackgroundAndTimeForRunningLesson(lesson, starttime);
             String strLocation = lesson.getStudio().getTitleShort();
             location.setText(strLocation);
             switch (strLocation) {
@@ -124,6 +125,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
             futureDays.setText(DateTimeParser.getDaysInTheFuture(lesson.getStarttimeExact()));
             i++;
+        }
+    }
+
+    private void setBackgroundAndTimeForRunningLesson(Lesson lesson, TextView starttime) {
+        if (new Date().getTime() >= lesson.getStarttimeExact().getTime()) {
+            starttime.setBackgroundColor(Color.parseColor("#B1DEB6"));
+            starttime.setText("-" + DateTimeParser.getTimeStringFromDate(lesson.getEndtime()));
         }
     }
 
