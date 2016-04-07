@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
                         DataProvider.getLessons().getSortingByName());
                 mRecyclerView.setAdapter(mAdapter);
             }
-//            Button btn = (Button) findViewById(R.id.name_btn);
-//            btn.setEnabled(true);
-//            btn = (Button) findViewById(R.id.time_btn);
-//            btn.setEnabled(true);
+            Button btn = (Button) findViewById(R.id.name_btn);
+            btn.setEnabled(true);
+            btn = (Button) findViewById(R.id.time_btn);
+            btn.setEnabled(true);
         }
     }
 }
