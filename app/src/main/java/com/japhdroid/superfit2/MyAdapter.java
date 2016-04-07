@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private Map<Course, List<Lesson>> mDataset;
+    private List<Course> sorting;
     private Context adapterContext;
 
     // Provide a reference to the views for each data item
@@ -48,9 +50,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Context adapterContext, Map<Course, List<Lesson>> myDataset) {
+    public MyAdapter(Context adapterContext, Map<Course, List<Lesson>> myDataset, List<Course> sorting) {
         this.adapterContext = adapterContext;
         mDataset = myDataset;
+        this.sorting = sorting;
     }
 
     // Create new views (invoked by the layout manager)
@@ -69,8 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Object key = mDataset.keySet().toArray()[position];
-        List<Lesson> _list = mDataset.get(key);
+        List<Lesson> _list = mDataset.get(sorting.get(position));
         final String name = _list.get(0).getCourse().getTitle();
         String duration = String.valueOf(_list.get(0).getCourse().getDuration());
         holder.txtHeader.setText(name + " (" + duration + "m)");

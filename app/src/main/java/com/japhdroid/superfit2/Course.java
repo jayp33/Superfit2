@@ -5,10 +5,11 @@ import java.util.Date;
 /**
  * Created by User on 04.12.2015.
  */
-public class Course {
+public class Course implements Comparable<Course> {
 
     private int id;
     private String title;
+    private String titleUppercase;
     private String description;
     private Floor floor; // 0 = Kurs, 1 = Teamtraining
     private int duration;
@@ -18,6 +19,7 @@ public class Course {
     public Course(int id, String title, String description, Floor floor, int duration, String imageUrl, Date imageUpdatedAt) {
         this.id = id;
         this.title = title;
+        this.titleUppercase = title.toUpperCase();
         this.description = description;
         this.floor = floor;
         this.duration = duration;
@@ -30,6 +32,11 @@ public class Course {
         return title;
     }
 
+    @Override
+    public int compareTo(Course another) {
+        return titleUppercase.compareTo(another.titleUppercase);
+    }
+
     enum Floor {
         KURS, TEAMTRAINING
     }
@@ -40,6 +47,10 @@ public class Course {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getTitleUppercase() {
+        return titleUppercase;
     }
 
     public String getDescription() {

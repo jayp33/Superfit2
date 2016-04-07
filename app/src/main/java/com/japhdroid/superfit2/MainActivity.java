@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Map<Course, List<Lesson>> lessonsByTime;
-    private Map<Course, List<Lesson>> lessonsByName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +41,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showByTime(View view) {
-        if (lessonsByTime.size() > 0) {
-            mAdapter = new MyAdapter(MainActivity.this, lessonsByTime);
+        Map<Course, List<Lesson>> lessons = DataProvider.getLessons().getLessonCollections();
+        if (lessons.size() > 0) {
+            mAdapter = new MyAdapter(MainActivity.this, lessons, DataProvider.getLessons().getSortingByStarttime());
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
     public void showByName(View view) {
-        if (lessonsByName.size() > 0) {
-            mAdapter = new MyAdapter(MainActivity.this, lessonsByName);
+        Map<Course, List<Lesson>> lessons = DataProvider.getLessons().getLessonCollections();
+        if (lessons.size() > 0) {
+            mAdapter = new MyAdapter(MainActivity.this, lessons, DataProvider.getLessons().getSortingByName());
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private class LoadData extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
-//            courseListByTime = new SuperfitCourseCollection().getCourseCollections();
-//            sortCourseListByName(courseListByTime);
             Map urls = new HashMap<DataProvider.DataType, String[]>();
             urls.put(DataProvider.DataType.STUDIOS, new String[]{"http://superfit.navillo.de/api/v3/studios.json"});
             urls.put(DataProvider.DataType.COURSES, new String[]{"http://superfit.navillo.de/api/v3/courses.json"});
@@ -70,26 +68,12 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        private void sortCourseListByName(Map<String, List<Lesson>> courseListByTime) {
-//            List<String> courseNames = new ArrayList<>();
-//            for (List<Lesson> courseList : courseListByTime) {
-//                if (!courseNames.contains(courseList.get(0).getCourse().getTitle()))
-//                    courseNames.add(courseList.get(0).getCourse().getTitle());
-//            }
-//            Collections.sort(courseNames);
-//            courseListByName = new ArrayList<>();
-//            for (String courseName : courseNames) {
-//                for (List<Lesson> courseList : courseListByTime) {
-//                    if (courseList.get(0).getCourse().getTitle().equals(courseName))
-//                        courseListByName.add(courseList);
-//                }
-//            }
-        }
-
         @Override
         protected void onPostExecute(String dummy) {
             if (DataProvider.getLessons().getLessons().size() > 0) {
-                mAdapter = new MyAdapter(MainActivity.this, DataProvider.getLessons().getLessonCollections());
+                mAdapter = new MyAdapter(MainActivity.this,
+                        DataProvider.getLessons().getLessonCollections(),
+                        DataProvider.getLessons().getSortingByName());
                 mRecyclerView.setAdapter(mAdapter);
             }
 //            Button btn = (Button) findViewById(R.id.name_btn);

@@ -20,6 +20,8 @@ public class Lessons {
     private String[] data;
     private List<Lesson> lessons;
     private Map<Course, List<Lesson>> lessonCollections;
+    private List<Course> sortingByName;
+    private List<Course> sortingByStarttime;
     private Studios studios;
     private Courses courses;
 
@@ -40,6 +42,72 @@ public class Lessons {
             List<Lesson> lessonCollection = lessonCollections.get(course);
             lessonCollection.add(lesson);
         }
+        createSortingByName();
+        createSortingByStarttime();
+    }
+
+    private void createSortingByName() {
+        List<Course> courses = Courses.getCourses();
+        sortingByName = new ArrayList<>();
+        for (Course course : courses) {
+            List<Lesson> lessonCollection = lessonCollections.get(course);
+            if (lessonCollection != null)
+                sortingByName.add(course);
+        }
+        Collections.sort(sortingByName);
+    }
+
+    class LessonStarttimeSorting implements Comparable<LessonStarttimeSorting> {
+        List<Lesson> collection;
+        Long firstStarttimeTicks;
+
+        public LessonStarttimeSorting(List<Lesson> collection) {
+            this.collection = collection;
+            for (int i = 0; i < collection.size(); i++) {
+                if (!collection.get(i).lessonIsOver()) {
+                    this.firstStarttimeTicks = collection.get(i).getStarttimeExact().getTime();
+                    break;
+                }
+            }
+        }
+
+        public List<Lesson> getCollection() {
+            return collection;
+        }
+
+        @Override
+        public int compareTo(LessonStarttimeSorting another) {
+            return firstStarttimeTicks.compareTo(another.firstStarttimeTicks);
+        }
+    }
+
+    private void createSortingByStarttime() {
+        List<Course> courses = Courses.getCourses();
+        Collections.sort(courses);
+        List<LessonStarttimeSorting> sortingList = new ArrayList<>();
+        for (Course course : courses) {
+            List<Lesson> lessonCollection = lessonCollections.get(course);
+            if (lessonCollection != null && thereArePendingLessonsForToday(lessonCollection)) {
+                sortingList.add(new LessonStarttimeSorting(lessonCollection));
+            }
+        }
+        sortingByStarttime = new ArrayList<>();
+        Collections.sort(sortingList);
+        for (LessonStarttimeSorting sortingItem : sortingList) {
+            Course course = sortingItem.getCollection().get(0).getCourse();
+            sortingByStarttime.add(course);
+        }
+    }
+
+    private boolean thereArePendingLessonsForToday(List<Lesson> lessonCollection) {
+        boolean pendingLessonsFound = false;
+        for (int i = 0; i < lessonCollection.size(); i++) {
+            if (!lessonCollection.get(i).lessonIsOver()) {
+                pendingLessonsFound = true;
+                break;
+            }
+        }
+        return pendingLessonsFound;
     }
 
     public List<Lesson> getLessons() {
@@ -48,6 +116,14 @@ public class Lessons {
 
     public Map<Course, List<Lesson>> getLessonCollections() {
         return lessonCollections;
+    }
+
+    public List<Course> getSortingByName() {
+        return sortingByName;
+    }
+
+    public List<Course> getSortingByStarttime() {
+        return sortingByStarttime;
     }
 
     public Lesson getLessonById(int id) {

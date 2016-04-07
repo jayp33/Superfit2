@@ -14,14 +14,14 @@ import java.util.List;
 public class Courses {
 
     private String data;
-    private List<Course> courses;
+    static private List<Course> courses;
 
     public Courses(String data) {
         this.data = data;
         createCourses();
     }
 
-    public List<Course> getCourses() {
+    static public List<Course> getCourses() {
         return courses;
     }
 

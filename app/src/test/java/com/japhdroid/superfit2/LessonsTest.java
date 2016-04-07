@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -113,5 +114,47 @@ public class LessonsTest {
                 assertTrue(actual);
             }
         }
+    }
+
+    @Test
+    public void testLessonCollectionsSortingByName() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        Map<Course, List<Lesson>> collections = lessons.getLessonCollections();
+        List<Course> sortingByName = lessons.getSortingByName();
+        for (int i = 0; i < sortingByName.size() - 1; i++) {
+            Course course1 = sortingByName.get(i);
+            Course course2 = sortingByName.get(i + 1);
+            assertTrue(course1.compareTo(course2) < 0);
+        }
+    }
+
+    @Test
+    public void testLessonCollectionsSortingByStarttime() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        Map<Course, List<Lesson>> collections = lessons.getLessonCollections();
+        List<Course> sortingByStartime = lessons.getSortingByStarttime();
+        for (int i = 0; i < sortingByStartime.size() - 1; i++) {
+            List<Lesson> collection1 = collections.get(sortingByStartime.get(i));
+            List<Lesson> collection2 = collections.get(sortingByStartime.get(i + 1));
+            Date starttime1 = getFirstLessonThatIsNotOver(collection1).getStarttimeExact();
+            Date starttime2 = getFirstLessonThatIsNotOver(collection2).getStarttimeExact();
+            boolean course1BeginsBeforeCourse2 = starttime1.getTime() < starttime2.getTime();
+            boolean coursesBeginAtTheSameTime = starttime1.getTime() == starttime2.getTime();
+            if (!course1BeginsBeforeCourse2) {
+                assertTrue(coursesBeginAtTheSameTime);
+                assertTrue(collection1.get(0).getCourse().compareTo(collection2.get(0).getCourse()) < 0);
+            } else
+                assertTrue(starttime1.getTime() <= starttime2.getTime());
+        }
+    }
+
+    private Lesson getFirstLessonThatIsNotOver(List<Lesson> lessonCollection) {
+        for (int i = 0; i < lessonCollection.size(); i++) {
+            if (!lessonCollection.get(i).lessonIsOver())
+                return lessonCollection.get(i);
+        }
+        return null;
     }
 }
