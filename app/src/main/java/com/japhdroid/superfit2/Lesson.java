@@ -82,6 +82,12 @@ public class Lesson implements Comparable<Lesson> {
         return endtime;
     }
 
+    public boolean lessonIsOver() {
+        if (lessonIsToday() && new Date().getTime() > endtime.getTime())
+            return true;
+        return false;
+    }
+
     @Override
     public String toString() {
         String starttimeStr = starttime.toString().substring(11, 19);
@@ -126,5 +132,16 @@ public class Lesson implements Comparable<Lesson> {
         starttimeExact = cal.getTime();
         cal.setTimeInMillis(cal.getTimeInMillis() + (course.getDuration() * 60 * 1000));
         endtime = cal.getTime();
+    }
+
+    private boolean lessonIsToday() {
+        Date lessonDate = starttimeExact;
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(lessonDate);
+        int lessonWeekday = cal.get(Calendar.DAY_OF_WEEK);
+        cal.setTime(today);
+        int todayWeekday = cal.get(Calendar.DAY_OF_WEEK);
+        return lessonWeekday == todayWeekday;
     }
 }

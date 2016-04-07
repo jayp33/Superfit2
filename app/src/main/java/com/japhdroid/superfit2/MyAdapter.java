@@ -84,6 +84,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         int i = 0;
         LayoutInflater inflater = LayoutInflater.from(adapterContext);
         for (Lesson lesson : _list) {
+            if (lesson.lessonIsOver())
+                continue;
             if (firstItem)
                 holder.course.removeAllViews();
             firstItem = false;
