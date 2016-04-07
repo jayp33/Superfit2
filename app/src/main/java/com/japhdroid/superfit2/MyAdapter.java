@@ -72,7 +72,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Object key = mDataset.keySet().toArray()[position];
         List<Lesson> _list = mDataset.get(key);
         final String name = _list.get(0).getCourse().getTitle();
-        holder.txtHeader.setText(name);
+        String duration = String.valueOf(_list.get(0).getCourse().getDuration());
+        holder.txtHeader.setText(name + " (" + duration + "m)");
         holder.txtHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
