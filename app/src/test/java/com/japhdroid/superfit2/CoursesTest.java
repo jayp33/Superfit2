@@ -15,7 +15,7 @@ public class CoursesTest {
     @Test
     public void testCourseCount() throws Exception {
         List<Course> courses = new Courses(TestDataProvider.courses).getCourses();
-        assertEquals(38, courses.size());
+        assertEquals(47, courses.size());
     }
 
     @Test
