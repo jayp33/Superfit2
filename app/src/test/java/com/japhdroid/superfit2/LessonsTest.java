@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -47,12 +48,32 @@ public class LessonsTest {
         Lesson lesson = lessons.getLessonById(220);
         assertEquals("SUPERFIT Friedrichshain", lesson.getStudio().getTitle());
         assertEquals("BODYPUMP", lesson.getCourse().getTitle());
+        assertFalse(lesson.getCourse().isEnglish());
+        assertFalse(lesson.isEnglish());
         assertEquals(Lesson.Capacity.GREEN, lesson.getCapacity());
         assertEquals(Lesson.Weekday.FRIDAY, lesson.getWeekday());
         // "starttime":"2012-10-12T11:00:00Z"
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(0);
         cal.set(1970, 0, 1, 11, 0, 0);
+        assertEquals(cal.getTime(), lesson.getStarttime());
+    }
+
+    @Test
+    public void testLessonId_513_IsCorrect() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_5}, studios, courses);
+        Lesson lesson = lessons.getLessonById(513);
+        assertEquals("SUPERFIT Mitte", lesson.getStudio().getTitle());
+        assertEquals("Yoga", lesson.getCourse().getTitle());
+        assertEquals(14, lesson.getCourse().getId()); // originally it is 54 "YOGA (english)"
+        assertFalse(lesson.getCourse().isEnglish());
+        assertTrue(lesson.isEnglish());
+        assertEquals(Lesson.Capacity.YELLOW, lesson.getCapacity());
+        assertEquals(Lesson.Weekday.TUESDAY, lesson.getWeekday());
+        // "starttime":"2016-03-29T20:30:00Z"
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(1970, 0, 1, 20, 30, 0);
         assertEquals(cal.getTime(), lesson.getStarttime());
     }
 

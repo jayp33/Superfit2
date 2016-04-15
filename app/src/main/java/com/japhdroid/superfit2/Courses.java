@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by User on 24.01.2016.
@@ -19,6 +20,7 @@ public class Courses {
     public Courses(String data) {
         this.data = data;
         createCourses();
+        identifyParentCourses();
     }
 
     static public List<Course> getCourses() {
@@ -56,5 +58,24 @@ public class Courses {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void identifyParentCourses() {
+        for (Course course : courses) {
+            if (course.isEnglish()) {
+                course.setParent(getParent(course));
+            }
+        }
+    }
+
+    private Course getParent(Course englishCourse) {
+        for (Course course : courses) {
+            String englishCourseTitle = englishCourse.getTitle();
+            englishCourseTitle = englishCourseTitle.substring(0, englishCourseTitle.indexOf(" (english)"));
+            if (!course.equals(englishCourse) && !course.isEnglish() &&
+                    course.getTitle().equalsIgnoreCase(englishCourseTitle))
+                return course;
+        }
+        throw new NoSuchElementException();
     }
 }

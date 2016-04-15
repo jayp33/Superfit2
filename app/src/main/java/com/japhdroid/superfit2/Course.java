@@ -15,6 +15,8 @@ public class Course implements Comparable<Course> {
     private int duration;
     private String imageUrl;
     private Date imageUpdatedAt;
+    private boolean isEnglish;
+    private Course parent;
 
     public Course(int id, String title, String description, Floor floor, int duration, String imageUrl, Date imageUpdatedAt) {
         this.id = id;
@@ -25,6 +27,7 @@ public class Course implements Comparable<Course> {
         this.duration = duration;
         this.imageUrl = imageUrl;
         this.imageUpdatedAt = imageUpdatedAt;
+        setEnglish(title);
     }
 
     @Override
@@ -71,5 +74,27 @@ public class Course implements Comparable<Course> {
 
     public Date getImageUpdatedAt() {
         return imageUpdatedAt;
+    }
+
+    public boolean isEnglish() {
+        return isEnglish;
+    }
+
+    private void setEnglish(String title) {
+        if (title.endsWith(" (english)")) {
+            isEnglish = true;
+        }
+    }
+
+    public Course getParent() {
+        return parent;
+    }
+
+    public boolean hasParent() {
+        return parent != null;
+    }
+
+    public void setParent(Course parent) {
+        this.parent = parent;
     }
 }

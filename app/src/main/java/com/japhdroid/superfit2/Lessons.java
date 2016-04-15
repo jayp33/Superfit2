@@ -148,6 +148,11 @@ public class Lessons {
                 int id = element.getInt("id");
                 Studio studio = studios.getStudioById(element.getInt("studio_id"));
                 Course course = courses.getCourseById(element.getInt("course_id"));
+                boolean isEnglish = false;
+                if (course.hasParent()) {
+                    course = course.getParent();
+                    isEnglish = true;
+                }
                 String starttime = element.getString("starttime");
                 Date starttime_asDate = DateTimeParser.getDateFromString(starttime);
                 Calendar starttimeCal = Calendar.getInstance();
@@ -190,7 +195,7 @@ public class Lessons {
                 }
                 String updatedAt = element.getString("updated_at");
                 Date updatedAt_asDate = DateTimeParser.getDateFromString(updatedAt);
-                Lesson newLesson = new Lesson(id, studio, course, capacity_asCapacity, starttime_asDate, weekday_asWeekday, updatedAt_asDate);
+                Lesson newLesson = new Lesson(id, studio, course, capacity_asCapacity, starttime_asDate, weekday_asWeekday, updatedAt_asDate, isEnglish);
                 int conflictingLessonIndex = getConflictingLessonIndex(newLesson);
                 if (conflictingLessonIndex >= 0) {
                     Lesson conflictingLesson = lessons.get(conflictingLessonIndex);

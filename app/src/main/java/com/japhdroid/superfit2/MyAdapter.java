@@ -113,6 +113,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
             starttime.setText(DateTimeParser.getTimeStringFromDate(lesson.getStarttime()));
             setBackgroundAndTimeForRunningLesson(lesson, starttime);
+            setTextColorForEnglishLesson(lesson, starttime);
             String strLocation = lesson.getStudio().getTitleShort();
             location.setText(strLocation);
             switch (strLocation) {
@@ -134,6 +135,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         if (new Date().getTime() >= lesson.getStarttimeExact().getTime()) {
             starttime.setBackgroundColor(Color.parseColor("#B1DEB6"));
             starttime.setText("-" + DateTimeParser.getTimeStringFromDate(lesson.getEndtime()));
+        }
+    }
+
+    private void setTextColorForEnglishLesson(Lesson lesson, TextView starttime) {
+        if (lesson.isEnglish()) {
+            starttime.setTextColor(Color.RED);
         }
     }
 
