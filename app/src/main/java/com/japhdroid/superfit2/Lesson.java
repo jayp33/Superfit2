@@ -115,7 +115,7 @@ public class Lesson implements Comparable<Lesson> {
                 else
                     return 1;
             else
-                return course.getTitle().compareTo(another.course.getTitle());
+                return course.getTitleUppercase().compareTo(another.course.getTitleUppercase());
 
         return starttimeExact.compareTo(another.starttimeExact);
     }
