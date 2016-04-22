@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by User on 24.01.2016.
@@ -21,7 +22,7 @@ public class Lessons {
     private List<Lesson> lessons;
     private Map<Course, List<Lesson>> lessonCollections;
     private List<Course> sortingByName;
-    private List<Course> sortingByStarttime;
+    private TreeMap<Date, List<Lesson>> lessonsGroupedByStarttime;
     private Studios studios;
     private Courses courses;
 
@@ -43,7 +44,7 @@ public class Lessons {
             lessonCollection.add(lesson);
         }
         createSortingByName();
-        createSortingByStarttime();
+        createLessonsGroupedByStarttime();
     }
 
     private void createSortingByName() {
@@ -57,57 +58,40 @@ public class Lessons {
         Collections.sort(sortingByName);
     }
 
-    class LessonStarttimeSorting implements Comparable<LessonStarttimeSorting> {
-        List<Lesson> collection;
-        Long firstStarttimeTicks;
+    private void createLessonsGroupedByStarttime() {
+        lessonsGroupedByStarttime = new TreeMap<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        calendar.setTimeInMillis(0);
+        calendar.set(year, month, day, hour, 0);
+        Date referenceDate = calendar.getTime();
+        Date startHour = calendar.getTime();
+        while (calendar.getTimeInMillis() - referenceDate.getTime() < (48 * 60 * 60 * 1000)) {
+            calendar.setTimeInMillis(calendar.getTimeInMillis() + (30 * 60 * 1000));
+            Date endHour = calendar.getTime();
 
-        public LessonStarttimeSorting(List<Lesson> collection) {
-            this.collection = collection;
-            for (int i = 0; i < collection.size(); i++) {
-                if (!collection.get(i).lessonIsOver()) {
-                    this.firstStarttimeTicks = collection.get(i).getStarttimeExact().getTime();
-                    break;
-                }
-            }
-        }
+            List<Lesson> lessonsForPeriod = getLessonsForPeriod(startHour, endHour);
+            if (lessonsForPeriod != null)
+                lessonsGroupedByStarttime.put(startHour, lessonsForPeriod);
 
-        public List<Lesson> getCollection() {
-            return collection;
-        }
-
-        @Override
-        public int compareTo(LessonStarttimeSorting another) {
-            return firstStarttimeTicks.compareTo(another.firstStarttimeTicks);
+            startHour = calendar.getTime();
         }
     }
 
-    private void createSortingByStarttime() {
-        List<Course> courses = Courses.getCourses();
-        Collections.sort(courses);
-        List<LessonStarttimeSorting> sortingList = new ArrayList<>();
-        for (Course course : courses) {
-            List<Lesson> lessonCollection = lessonCollections.get(course);
-            if (lessonCollection != null && thereArePendingLessonsForToday(lessonCollection)) {
-                sortingList.add(new LessonStarttimeSorting(lessonCollection));
-            }
+    private List<Lesson> getLessonsForPeriod(Date startHour, Date endHour) {
+        List<Lesson> lessonsForPeriod = new ArrayList<>();
+        for (Lesson lesson : lessons) {
+            Date lessonStarttime = lesson.getStarttimeExact();
+            if (lessonStarttime.getTime() >= startHour.getTime() && lessonStarttime.getTime() < endHour.getTime())
+                lessonsForPeriod.add(lesson);
         }
-        sortingByStarttime = new ArrayList<>();
-        Collections.sort(sortingList);
-        for (LessonStarttimeSorting sortingItem : sortingList) {
-            Course course = sortingItem.getCollection().get(0).getCourse();
-            sortingByStarttime.add(course);
-        }
-    }
-
-    private boolean thereArePendingLessonsForToday(List<Lesson> lessonCollection) {
-        boolean pendingLessonsFound = false;
-        for (int i = 0; i < lessonCollection.size(); i++) {
-            if (!lessonCollection.get(i).lessonIsOver()) {
-                pendingLessonsFound = true;
-                break;
-            }
-        }
-        return pendingLessonsFound;
+        if (lessonsForPeriod.size() == 0)
+            return null;
+        return lessonsForPeriod;
     }
 
     public List<Lesson> getLessons() {
@@ -122,8 +106,8 @@ public class Lessons {
         return sortingByName;
     }
 
-    public List<Course> getSortingByStarttime() {
-        return sortingByStarttime;
+    public TreeMap<Date, List<Lesson>> getLessonsGroupedByStarttime() {
+        return lessonsGroupedByStarttime;
     }
 
     public Lesson getLessonById(int id) {

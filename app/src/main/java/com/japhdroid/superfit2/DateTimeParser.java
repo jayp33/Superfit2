@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by User on 24.01.2016.
@@ -40,6 +41,23 @@ public class DateTimeParser {
 
     static String getTimeStringFromDate(Date date) {
         return date.toString().substring(11, 16);
+    }
+
+    static String getTimeAndDayStringFromDateAsOfToday(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        Date now = new Date();
+        calendar.setTime(now);
+        int todayDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        calendar.setTime(date);
+        int dateDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        if (todayDayOfYear == dateDayOfYear)
+            return getTimeStringFromDate(date);
+        if (date.getTime() - now.getTime() > (7 * 24 * 60 * 60 * 1000))
+            throw new IllegalArgumentException("Date is too far in the future");
+        if (dateDayOfYear - todayDayOfYear == 1)
+            return "Morgen " + getTimeStringFromDate(date);
+        String day = calendar.getDisplayName(calendar.DAY_OF_WEEK, Calendar.LONG, Locale.GERMAN);
+        return day + " " + getTimeStringFromDate(date);
     }
 
     static String getDaysInTheFuture(Date date) {

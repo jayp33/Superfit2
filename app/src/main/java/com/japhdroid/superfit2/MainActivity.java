@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showByTime(View view) {
-        Map<Course, List<Lesson>> lessons = DataProvider.getLessons().getLessonCollections();
+        TreeMap<Date, List<Lesson>> lessons = DataProvider.getLessons().getLessonsGroupedByStarttime();
         if (lessons.size() > 0) {
-            mAdapter = new MyAdapter(MainActivity.this, lessons, DataProvider.getLessons().getSortingByStarttime());
+            mAdapter = new StarttimeAdapter(MainActivity.this, lessons);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
