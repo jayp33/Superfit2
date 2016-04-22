@@ -30,13 +30,14 @@
 
     <TextView
         android:id="@+id/courseType"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/lessonLocation" />
+        android:layout_toLeftOf="@id/lessonLocation"
+        android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/lessonLocation"
-        android:layout_width="50dp"
+        android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

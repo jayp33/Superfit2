@@ -55,9 +55,9 @@ public class DateTimeParser {
         if (date.getTime() - now.getTime() > (7 * 24 * 60 * 60 * 1000))
             throw new IllegalArgumentException("Date is too far in the future");
         if (dateDayOfYear - todayDayOfYear == 1)
-            return "Morgen " + getTimeStringFromDate(date);
+            return "M " + getTimeStringFromDate(date);
         String day = calendar.getDisplayName(calendar.DAY_OF_WEEK, Calendar.LONG, Locale.GERMAN);
-        return day + " " + getTimeStringFromDate(date);
+        return day.substring(0, 2) + " " + getTimeStringFromDate(date);
     }
 
     static String getDaysInTheFuture(Date date) {
