@@ -174,4 +174,26 @@ public class LessonsTest {
         }
         assertEquals(lessonsGroupedByStarttime.size(), i);
     }
+
+    @Test
+    public void testGetSurroundingLessons() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        Lesson lesson = lessons.getLessonById(947); // TRX Bauch, Monday 17:30, Mitte
+        List<Lesson> surroundingLessons = lessons.getSurroundingLessons(lesson);
+        assertEquals(3, surroundingLessons.size());
+        assertEquals(479, surroundingLessons.get(0).getId());
+        assertEquals(2129, surroundingLessons.get(1).getId());
+        assertEquals(1291, surroundingLessons.get(2).getId());
+    }
+
+    @Test
+    public void testGetSingleSurroundingLesson() throws Exception {
+        Lessons lessons = new Lessons(new String[]{TestDataProvider.lessons_studio_3,
+                TestDataProvider.lessons_studio_5}, studios, courses);
+        Lesson lesson = lessons.getLessonById(513); // YOGA, Tuesday 20:30, Mitte
+        List<Lesson> surroundingLessons = lessons.getSurroundingLessons(lesson);
+        assertEquals(1, surroundingLessons.size());
+        assertEquals(510, surroundingLessons.get(0).getId());
+    }
 }

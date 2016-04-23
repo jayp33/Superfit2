@@ -233,4 +233,25 @@ public class Lessons {
     public List<Lesson> getLessons(Studio[] studios, boolean futureCourses, boolean includeRunning) {
         return null; //TODO implement
     }
+
+    public List<Lesson> getSurroundingLessons(Lesson lesson) {
+        List<Lesson> lessonsForStudio = getLessons(new Studio[]{lesson.getStudio()});
+        for (int i = lessonsForStudio.size() - 1; i >= 0; i--) {
+            if (!lessonIsWithinTimeRange(lesson, lessonsForStudio.get(i)) ||
+                    lessonTimesAreOverlapping(lesson, lessonsForStudio.get(i)))
+                lessonsForStudio.remove(i);
+        }
+        return lessonsForStudio;
+    }
+
+    private boolean lessonIsWithinTimeRange(Lesson checkedLesson, Lesson surroundingLesson) {
+        long gapInMillis = 0;
+        if (surroundingLesson.getEndtime().getTime() < checkedLesson.getStarttimeExact().getTime())
+            gapInMillis = checkedLesson.getStarttimeExact().getTime() - surroundingLesson.getEndtime().getTime();
+        else if (surroundingLesson.getStarttimeExact().getTime() >= checkedLesson.getEndtime().getTime())
+            gapInMillis = surroundingLesson.getStarttimeExact().getTime() - checkedLesson.getEndtime().getTime();
+        if (gapInMillis <= (15 * 60 * 1000))
+            return true;
+        return false;
+    }
 }
