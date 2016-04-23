@@ -113,7 +113,7 @@ public class LessonsTest {
             if (_lessons.get(i + 1).getStarttimeExact().getTime() > _lessons.get(i).getStarttimeExact().getTime())
                 actual = true;
             if (_lessons.get(i + 1).getStarttimeExact().getTime() == _lessons.get(i).getStarttimeExact().getTime())
-                if (_lessons.get(i + 1).getCourse().getFloor() == Course.Floor.TEAMTRAINING)
+                if (_lessons.get(i).getCourse().getFloor() != _lessons.get(i + 1).getCourse().getFloor())
                     actual = true;
             assertTrue(actual);
         }

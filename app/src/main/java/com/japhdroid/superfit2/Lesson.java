@@ -109,13 +109,7 @@ public class Lesson implements Comparable<Lesson> {
     @Override
     public int compareTo(Lesson another) {
         if (starttimeExact.getTime() == another.starttimeExact.getTime())
-            if (course.getFloor() != another.course.getFloor())
-                if (course.getFloor() == Course.Floor.KURS)
-                    return -1;
-                else
-                    return 1;
-            else
-                return course.getTitleUppercase().compareTo(another.course.getTitleUppercase());
+            return course.getTitleUppercase().compareTo(another.course.getTitleUppercase());
 
         return starttimeExact.compareTo(another.starttimeExact);
     }
