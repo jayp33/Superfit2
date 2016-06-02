@@ -6,6 +6,8 @@ package com.japhdroid.superfit2;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
@@ -96,6 +99,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 break;
             View inflatedLayout = inflater.inflate(R.layout.lesson_layout, holder.course, false);
             holder.course.addView(inflatedLayout);
+            TextView lessonId = (TextView) inflatedLayout.findViewById(R.id.lessonId_name);
+            lessonId.setText(String.valueOf(lesson.getId()));
+            inflatedLayout.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // UI code here
+                            TextView location = (TextView) v.findViewById(R.id.lessonLocation);
+                            TextView starttime = (TextView) v.findViewById(R.id.lessonStarttime);
+                            TextView lessonId = (TextView) v.findViewById(R.id.lessonId_name);
+                            String message = location.getText() + " @ " + starttime.getText() + " [id:" + lessonId.getText() + "]";
+                            Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
             View capacity = inflatedLayout.findViewById(R.id.lessonCapacity);
             TextView starttime = (TextView) inflatedLayout.findViewById(R.id.lessonStarttime);
             TextView location = (TextView) inflatedLayout.findViewById(R.id.lessonLocation);

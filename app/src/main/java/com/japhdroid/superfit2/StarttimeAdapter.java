@@ -6,12 +6,15 @@ package com.japhdroid.superfit2;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
@@ -76,6 +79,25 @@ public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.View
             firstItem = false;
             View inflatedLayout = inflater.inflate(R.layout.starttime_layout, holder.starttimeGroup, false);
             holder.starttimeGroup.addView(inflatedLayout);
+            TextView lessonId = (TextView) inflatedLayout.findViewById(R.id.lessonId_starttime);
+            lessonId.setText(String.valueOf(lesson.getId()));
+            inflatedLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // UI code here
+                            TextView location = (TextView) v.findViewById(R.id.lessonLocation);
+                            TextView course = (TextView) v.findViewById(R.id.courseName);
+                            TextView lessonId = (TextView) v.findViewById(R.id.lessonId_starttime);
+                            String message = course.getText() + " @ " + location.getText() + " [id:" + lessonId.getText() + "]";
+                            Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
             View capacity = inflatedLayout.findViewById(R.id.lessonCapacity);
             TextView courseName = (TextView) inflatedLayout.findViewById(R.id.courseName);
             TextView courseType = (TextView) inflatedLayout.findViewById(R.id.courseType);
