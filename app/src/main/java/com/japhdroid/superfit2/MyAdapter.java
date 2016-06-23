@@ -89,7 +89,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         boolean firstItem = true;
         int i = 0;
         LayoutInflater inflater = LayoutInflater.from(adapterContext);
-        for (Lesson lesson : _list) {
+        for (final Lesson lesson : _list) {
             if (lesson.lessonIsOver())
                 continue;
             if (firstItem)
@@ -114,6 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             TextView lessonId = (TextView) v.findViewById(R.id.lessonId_name);
                             String message = location.getText() + " @ " + starttime.getText() + " [id:" + lessonId.getText() + "]";
                             Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
+                            new RelatedLessons(v.getContext(), lesson);
                         }
                     });
                 }

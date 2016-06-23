@@ -71,7 +71,7 @@ public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.View
 
         boolean firstItem = true;
         LayoutInflater inflater = LayoutInflater.from(adapterContext);
-        for (Lesson lesson : _list) {
+        for (final Lesson lesson : _list) {
             if (lesson.lessonIsOver())
                 continue;
             if (firstItem)
@@ -94,6 +94,7 @@ public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.View
                             TextView lessonId = (TextView) v.findViewById(R.id.lessonId_starttime);
                             String message = course.getText() + " @ " + location.getText() + " [id:" + lessonId.getText() + "]";
                             Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
+                            new RelatedLessons(v.getContext(), lesson);
                         }
                     });
                 }
