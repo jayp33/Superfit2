@@ -1,11 +1,18 @@
 package com.japhdroid.superfit2;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -14,6 +21,7 @@ import java.util.logging.Logger;
  */
 public class DataProvider {
 
+    private static Context context;
     private static Studios studios;
     private static Courses courses;
     private static Lessons lessons;
@@ -34,7 +42,8 @@ public class DataProvider {
         return lessons;
     }
 
-    public static void LoadData(Map<DataType, String[]> urls) {
+    public static void LoadData(Context context, Map<DataType, String[]> urls) {
+        DataProvider.context = context;
         if (studios == null) {
             String studioUrl = urls.get(DataType.STUDIOS)[0];
             LoadStudios(studioUrl);
@@ -47,6 +56,10 @@ public class DataProvider {
     }
 
     private static String getJSON(String url, int timeout) {
+        String json = getJSONFromCache(url);
+        if (json != null) {
+            return json;
+        }
         HttpURLConnection c = null;
         try {
             URL u = new URL(url);
@@ -70,6 +83,9 @@ public class DataProvider {
                         sb.append(line + "\n");
                     }
                     br.close();
+
+                    storeJSONToCache(url, sb.toString());
+
                     return sb.toString();
             }
 
@@ -87,6 +103,70 @@ public class DataProvider {
             }
         }
         return null;
+    }
+
+    private static void storeJSONToCache(String url, String json) {
+        url = formatUrlForCache(url);
+        JSONCache jsonCache = new JSONCache();
+        jsonCache.setUrl(url);
+        jsonCache.setJson(json);
+        try {
+            InternalStorage.writeObject(context, url, jsonCache);
+            Log.d("JSON", "JSON stored to cache for " + url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Preferences.setLastDownloadTimeForUrl(context, url, new Date().getTime());
+    }
+
+    private static String getJSONFromCache(String url) {
+        if (!hasValidCache(url))
+            return null;
+        url = formatUrlForCache(url);
+        JSONCache json = null;
+        try {
+            json = (JSONCache) InternalStorage.readObject(context, url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (json != null) {
+            Log.d("JSON", "JSON loaded from cache for " + url);
+            return json.getJson();
+        }
+        return null;
+    }
+
+    private static boolean hasValidCache(String url) {
+        url = formatUrlForCache(url);
+        long cacheTimeout = Preferences.getCacheTimeout(context);
+        long lastDownloadTime = Preferences.getLastDownloadTimeForUrl(context, url);
+        long currentTime = new Date().getTime();
+        Log.d("JSON", "LastDownload time + Cache timeout: " + lastDownloadTime + cacheTimeout);
+        Log.d("JSON", "Current time: " + currentTime);
+
+        final int dataAge = (int) ((currentTime - lastDownloadTime) / 1000 / 60);
+        final boolean cacheIsValid = currentTime < lastDownloadTime + cacheTimeout;
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (cacheIsValid)
+                    Toast.makeText(DataProvider.context, "Data loaded from cache (age: " + dataAge + " minutes)", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(DataProvider.context, "Data loaded from server", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return cacheIsValid;
+    }
+
+    private static String formatUrlForCache(String url) {
+        String[] urlSegments = url.split("/");
+        return urlSegments[urlSegments.length - 1];
     }
 
     private static void LoadStudios(String url) {

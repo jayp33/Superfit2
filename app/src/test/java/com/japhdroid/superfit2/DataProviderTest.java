@@ -18,6 +18,7 @@ public class DataProviderTest {
         urls.put(DataProvider.DataType.COURSES, new String[]{"http://superfit.navillo.de/api/v3/courses.json"});
         urls.put(DataProvider.DataType.LESSONS, new String[]{"http://superfit.navillo.de/api/v3/lessons.json?studio_id=3",
                 "http://superfit.navillo.de/api/v3/lessons.json?studio_id=5"});
-        DataProvider.LoadData(urls);
+        throw new Exception("DataProvider.LoadData(Map) needs context");
+//        DataProvider.LoadData(urls);
     }
 }

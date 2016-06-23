@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Preferences.setCacheTimeout(this, 1000 * 60 * 60 * 24);  // one day
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             urls.put(DataProvider.DataType.COURSES, new String[]{"http://superfit.navillo.de/api/v3/courses.json"});
             urls.put(DataProvider.DataType.LESSONS, new String[]{"http://superfit.navillo.de/api/v3/lessons.json?studio_id=3",
                     "http://superfit.navillo.de/api/v3/lessons.json?studio_id=5"});
-            DataProvider.LoadData(urls);
+            DataProvider.LoadData(getApplicationContext(), urls);
             return null;
         }
 
