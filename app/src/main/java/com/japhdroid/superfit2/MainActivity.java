@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Preferences.setCacheTimeout(this, 1000 * 60 * 60 * 24);  // one day
+        Preferences.setCacheTimeout(this, 1000 * 60 * 60 * 24 * 7);  // one week
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -40,8 +43,20 @@ public class MainActivity extends AppCompatActivity {
         doSomething(null);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
     public void doSomething(View view) {
         new LoadData().execute();
+    }
+
+    public void reloadDataFromServer(MenuItem item) {
+        DataProvider.invalidateData();
+        doSomething(null);
     }
 
     public void showByTime(View view) {

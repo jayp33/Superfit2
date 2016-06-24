@@ -23,18 +23,18 @@ public class Preferences {
         return cacheTimeout;
     }
 
-    public static void setLastDownloadTimeForUrl(Context context, String url, long timestamp) {
+    public static void setLastDownloadTime(Context context, long timestamp) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putLong(url + "_lastDownload", timestamp);
+        editor.putLong("lastDownloadTime", timestamp);
         editor.commit();
     }
 
-    public static long getLastDownloadTimeForUrl(Context context, String url) {
+    public static long getLastDownloadTime(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        long timestamp = sharedPref.getLong(url + "_lastDownload", 0);
+        long timestamp = sharedPref.getLong("lastDownloadTime", 0);
         return timestamp;
     }
 }

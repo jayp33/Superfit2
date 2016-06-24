@@ -25,6 +25,7 @@ public class DataProvider {
     private static Studios studios;
     private static Courses courses;
     private static Lessons lessons;
+    private static boolean dataIsValid = true;
 
     enum DataType {
         STUDIOS, COURSES, LESSONS
@@ -53,6 +54,14 @@ public class DataProvider {
             LoadCourses(courseUrl);
         }
         LoadLessons(urls.get(DataType.LESSONS));
+        dataIsValid = true;
+    }
+
+    public static void invalidateData() {
+        studios = null;
+        courses = null;
+        lessons = null;
+        dataIsValid = false;
     }
 
     private static String getJSON(String url, int timeout) {
@@ -117,11 +126,11 @@ public class DataProvider {
             e.printStackTrace();
         }
 
-        Preferences.setLastDownloadTimeForUrl(context, url, new Date().getTime());
+        Preferences.setLastDownloadTime(context, new Date().getTime());
     }
 
     private static String getJSONFromCache(String url) {
-        if (!hasValidCache(url))
+        if (!isCacheValid())
             return null;
         url = formatUrlForCache(url);
         JSONCache json = null;
@@ -139,13 +148,13 @@ public class DataProvider {
         return null;
     }
 
-    private static boolean hasValidCache(String url) {
-        url = formatUrlForCache(url);
+    private static boolean isCacheValid() {
         long cacheTimeout = Preferences.getCacheTimeout(context);
-        long lastDownloadTime = Preferences.getLastDownloadTimeForUrl(context, url);
+        if (!dataIsValid)
+            cacheTimeout = 0;
+        long lastDownloadTime = Preferences.getLastDownloadTime(context);
         long currentTime = new Date().getTime();
-        Log.d("JSON", "LastDownload time + Cache timeout: " + lastDownloadTime + cacheTimeout);
-        Log.d("JSON", "Current time: " + currentTime);
+        Log.d("JSON", "Data still valid for " + ((lastDownloadTime + cacheTimeout) - currentTime) + " ms");
 
         final int dataAge = (int) ((currentTime - lastDownloadTime) / 1000 / 60);
         final boolean cacheIsValid = currentTime < lastDownloadTime + cacheTimeout;
@@ -155,7 +164,7 @@ public class DataProvider {
             @Override
             public void run() {
                 if (cacheIsValid)
-                    Toast.makeText(DataProvider.context, "Data loaded from cache (age: " + dataAge + " minutes)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataProvider.context, "Using cached data\nAge: " + dataAge + " minutes", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(DataProvider.context, "Data loaded from server", Toast.LENGTH_SHORT).show();
             }
