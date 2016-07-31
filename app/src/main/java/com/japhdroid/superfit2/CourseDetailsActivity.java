@@ -1,9 +1,15 @@
 package com.japhdroid.superfit2;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
@@ -58,40 +64,58 @@ public class CourseDetailsActivity extends AppCompatActivity {
     }
 
     private void setTimespans() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int weekday = calendar.get(Calendar.DAY_OF_WEEK);
+
         TextView course_timespan_0to10_monday = (TextView) findViewById(R.id.course_timespan_0to10_monday);
         TextView course_timespan_10to14_monday = (TextView) findViewById(R.id.course_timespan_10to14_monday);
         TextView course_timespan_14to18_monday = (TextView) findViewById(R.id.course_timespan_14to18_monday);
         TextView course_timespan_18to0_monday = (TextView) findViewById(R.id.course_timespan_18to0_monday);
+        if (weekday == 2)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_monday, course_timespan_10to14_monday, course_timespan_14to18_monday, course_timespan_18to0_monday));
 
         TextView course_timespan_0to10_tuesday = (TextView) findViewById(R.id.course_timespan_0to10_tuesday);
         TextView course_timespan_10to14_tuesday = (TextView) findViewById(R.id.course_timespan_10to14_tuesday);
         TextView course_timespan_14to18_tuesday = (TextView) findViewById(R.id.course_timespan_14to18_tuesday);
         TextView course_timespan_18to0_tuesday = (TextView) findViewById(R.id.course_timespan_18to0_tuesday);
+        if (weekday == 3)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_tuesday, course_timespan_10to14_tuesday, course_timespan_14to18_tuesday, course_timespan_18to0_tuesday));
 
         TextView course_timespan_0to10_wednesday = (TextView) findViewById(R.id.course_timespan_0to10_wednesday);
         TextView course_timespan_10to14_wednesday = (TextView) findViewById(R.id.course_timespan_10to14_wednesday);
         TextView course_timespan_14to18_wednesday = (TextView) findViewById(R.id.course_timespan_14to18_wednesday);
         TextView course_timespan_18to0_wednesday = (TextView) findViewById(R.id.course_timespan_18to0_wednesday);
+        if (weekday == 4)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_wednesday, course_timespan_10to14_wednesday, course_timespan_14to18_wednesday, course_timespan_18to0_wednesday));
 
         TextView course_timespan_0to10_thursday = (TextView) findViewById(R.id.course_timespan_0to10_thursday);
         TextView course_timespan_10to14_thursday = (TextView) findViewById(R.id.course_timespan_10to14_thursday);
         TextView course_timespan_14to18_thursday = (TextView) findViewById(R.id.course_timespan_14to18_thursday);
         TextView course_timespan_18to0_thursday = (TextView) findViewById(R.id.course_timespan_18to0_thursday);
+        if (weekday == 5)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_thursday, course_timespan_10to14_thursday, course_timespan_14to18_thursday, course_timespan_18to0_thursday));
 
         TextView course_timespan_0to10_friday = (TextView) findViewById(R.id.course_timespan_0to10_friday);
         TextView course_timespan_10to14_friday = (TextView) findViewById(R.id.course_timespan_10to14_friday);
         TextView course_timespan_14to18_friday = (TextView) findViewById(R.id.course_timespan_14to18_friday);
         TextView course_timespan_18to0_friday = (TextView) findViewById(R.id.course_timespan_18to0_friday);
+        if (weekday == 6)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_friday, course_timespan_10to14_friday, course_timespan_14to18_friday, course_timespan_18to0_friday));
 
         TextView course_timespan_0to10_saturday = (TextView) findViewById(R.id.course_timespan_0to10_saturday);
         TextView course_timespan_10to14_saturday = (TextView) findViewById(R.id.course_timespan_10to14_saturday);
         TextView course_timespan_14to18_saturday = (TextView) findViewById(R.id.course_timespan_14to18_saturday);
         TextView course_timespan_18to0_saturday = (TextView) findViewById(R.id.course_timespan_18to0_saturday);
+        if (weekday == 7)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_saturday, course_timespan_10to14_saturday, course_timespan_14to18_saturday, course_timespan_18to0_saturday));
 
         TextView course_timespan_0to10_sunday = (TextView) findViewById(R.id.course_timespan_0to10_sunday);
         TextView course_timespan_10to14_sunday = (TextView) findViewById(R.id.course_timespan_10to14_sunday);
         TextView course_timespan_14to18_sunday = (TextView) findViewById(R.id.course_timespan_14to18_sunday);
         TextView course_timespan_18to0_sunday = (TextView) findViewById(R.id.course_timespan_18to0_sunday);
+        if (weekday == 1)
+            highlightTimespans(Arrays.asList(course_timespan_0to10_sunday, course_timespan_10to14_sunday, course_timespan_14to18_sunday, course_timespan_18to0_sunday));
 
         course_timespan_0to10_monday.setText(getStudioCountBullets(DataProvider.getLessons().getStudiosForTimespan(course, Lesson.Weekday.MONDAY, Lesson.Timespan._0to10).size()));
         course_timespan_10to14_monday.setText(getStudioCountBullets(DataProvider.getLessons().getStudiosForTimespan(course, Lesson.Weekday.MONDAY, Lesson.Timespan._10to14).size()));
@@ -135,5 +159,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
             studioCountBullets += "\u2022";
         }
         return studioCountBullets;
+    }
+
+    private void highlightTimespans(List<TextView> textViews) {
+        for (TextView textview : textViews) {
+            textview.setBackgroundColor(Color.parseColor("#f0e792"));
+        }
     }
 }
