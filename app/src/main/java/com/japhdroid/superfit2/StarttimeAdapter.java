@@ -125,6 +125,12 @@ public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.View
                 case "MIT":
                     courseName.setBackgroundColor(Color.parseColor("#DECCB1"));
                     break;
+                case "TEG":
+                    courseName.setBackgroundColor(Color.parseColor("#CBDBE1"));
+                    break;
+                case "CHA":
+                    courseName.setBackgroundColor(Color.parseColor("#D4E1B1"));
+                    break;
             }
             courseName.setText(lesson.getCourse().getTitle());
         }

@@ -148,6 +148,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     location.setBackgroundColor(Color.parseColor("#DECCB1"));
                     futureDays.setBackgroundColor(Color.parseColor("#DECCB1"));
                     break;
+                case "TEG":
+                    location.setBackgroundColor(Color.parseColor("#CBDBE1"));
+                    futureDays.setBackgroundColor(Color.parseColor("#CBDBE1"));
+                    break;
+                case "CHA":
+                    location.setBackgroundColor(Color.parseColor("#D4E1B1"));
+                    futureDays.setBackgroundColor(Color.parseColor("#D4E1B1"));
+                    break;
             }
             futureDays.setText(DateTimeParser.getDaysInTheFuture(lesson.getStarttimeExact()));
             i++;

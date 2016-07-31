@@ -66,8 +66,11 @@ public class MainActivity extends AppCompatActivity {
             Map urls = new HashMap<DataProvider.DataType, String[]>();
             urls.put(DataProvider.DataType.STUDIOS, new String[]{"http://superfit.navillo.de/api/v3/studios.json"});
             urls.put(DataProvider.DataType.COURSES, new String[]{"http://superfit.navillo.de/api/v3/courses.json"});
-            urls.put(DataProvider.DataType.LESSONS, new String[]{"http://superfit.navillo.de/api/v3/lessons.json?studio_id=3",
-                    "http://superfit.navillo.de/api/v3/lessons.json?studio_id=5"});
+            urls.put(DataProvider.DataType.LESSONS, new String[]{
+                    "http://superfit.navillo.de/api/v3/lessons.json?studio_id=3",   // Friedrichshain
+                    "http://superfit.navillo.de/api/v3/lessons.json?studio_id=5",   // Mitte
+                    "http://superfit.navillo.de/api/v3/lessons.json?studio_id=9",   // Tegel
+                    "http://superfit.navillo.de/api/v3/lessons.json?studio_id=2"}); // Charlottenburg
             DataProvider.LoadData(getApplicationContext(), urls);
             return null;
         }
