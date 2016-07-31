@@ -48,6 +48,10 @@ public class Lesson implements Comparable<Lesson> {
         }
     }
 
+    enum Timespan {
+        _0to10, _10to14, _14to18, _18to0
+    }
+
     public int getId() {
         return id;
     }
@@ -86,6 +90,21 @@ public class Lesson implements Comparable<Lesson> {
 
     public Date getEndtime() {
         return endtime;
+    }
+
+    public Timespan getTimeSpan() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(starttime);
+        int startingHour = calendar.get(Calendar.HOUR_OF_DAY);
+        if (startingHour >= 0 && startingHour < 10)
+            return Timespan._0to10;
+        if (startingHour >= 10 && startingHour < 14)
+            return Timespan._10to14;
+        if (startingHour >= 14 && startingHour < 18)
+            return Timespan._14to18;
+        if (startingHour >= 18 && startingHour <= 23)
+            return Timespan._18to0;
+        throw new IllegalStateException("Timespan is not within a valid range.");
     }
 
     public boolean lessonIsOver() {

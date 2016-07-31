@@ -234,6 +234,40 @@ public class Lessons {
         return null; //TODO implement
     }
 
+    public List<Lesson> getLessons(Course course) {
+        return lessonCollections.get(course);
+    }
+
+    public List<Lesson> getLessons(Course course, Lesson.Weekday weekday) {
+        List<Lesson> lessonsForCourse = getLessons(course);
+        List<Lesson> lessonsForWeekday = new ArrayList<>();
+        for (Lesson lesson : lessonsForCourse) {
+            if (lesson.getWeekday().equals(weekday))
+                lessonsForWeekday.add(lesson);
+        }
+        return lessonsForWeekday;
+    }
+
+    public List<Lesson> getLessons(Course course, Lesson.Weekday weekday, Lesson.Timespan timespan) {
+        List<Lesson> lessonsForWeekday = getLessons(course, weekday);
+        List<Lesson> lessonsForTimespan = new ArrayList<>();
+        for (Lesson lesson : lessonsForWeekday) {
+            if (lesson.getTimeSpan().equals(timespan))
+                lessonsForTimespan.add(lesson);
+        }
+        return lessonsForTimespan;
+    }
+
+    public List<Studio> getStudiosForTimespan(Course course, Lesson.Weekday weekday, Lesson.Timespan timespan) {
+        List<Lesson> lessonsForTimespan = getLessons(course, weekday, timespan);
+        List<Studio> studiosForTimespan = new ArrayList<>();
+        for (Lesson lesson : lessonsForTimespan) {
+            if (!studiosForTimespan.contains(lesson.getStudio()))
+                studiosForTimespan.add(lesson.getStudio());
+        }
+        return studiosForTimespan;
+    }
+
     public List<Lesson> getSurroundingLessons(Lesson lesson) {
         List<Lesson> lessonsForStudio = getLessons(new Studio[]{lesson.getStudio()});
         for (int i = lessonsForStudio.size() - 1; i >= 0; i--) {

@@ -84,46 +84,45 @@
                 android:textSize="10sp" />
 
             <TextView
-                android:layout_gravity="center"
+                android:id="@+id/course_count_monday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_count_tuesday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_count_wednesday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_count_thursday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_count_friday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_count_saturday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_count_sunday"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0"
                 android:textSize="10sp" />
 
         </TableRow>
@@ -137,40 +136,47 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:paddingLeft="6dp"
-                android:text="06 - 10 Uhr"
+                android:text="bis 10 Uhr"
                 android:textSize="10sp" />
 
             <TextView
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="\u2022" />
-
-            <TextView
+                android:id="@+id/course_timespan_0to10_monday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_0to10_tuesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_0to10_wednesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_0to10_thursday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_0to10_friday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_0to10_saturday"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/course_timespan_0to10_sunday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
@@ -190,36 +196,43 @@
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_timespan_10to14_monday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="\u2022" />
-
-            <TextView
+                android:id="@+id/course_timespan_10to14_tuesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_10to14_wednesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_10to14_thursday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_10to14_friday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_10to14_saturday"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/course_timespan_10to14_sunday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
@@ -239,36 +252,43 @@
                 android:textSize="10sp" />
 
             <TextView
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="\u2022" />
-
-            <TextView
+                android:id="@+id/course_timespan_14to18_monday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_14to18_tuesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_14to18_wednesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_14to18_thursday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_14to18_friday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_14to18_saturday"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/course_timespan_14to18_sunday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
@@ -284,40 +304,47 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:paddingLeft="6dp"
-                android:text="18 - 22 Uhr"
+                android:text="ab 18 Uhr"
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/course_timespan_18to0_monday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="\u2022" />
-
-            <TextView
+                android:id="@+id/course_timespan_18to0_tuesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_18to0_wednesday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_18to0_thursday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_18to0_friday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
 
             <TextView
+                android:id="@+id/course_timespan_18to0_saturday"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/course_timespan_18to0_sunday"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="" />
