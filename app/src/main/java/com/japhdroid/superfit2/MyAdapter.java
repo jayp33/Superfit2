@@ -5,6 +5,7 @@ package com.japhdroid.superfit2;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -78,11 +79,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         List<Lesson> _list = mDataset.get(sorting.get(position));
         final String name = _list.get(0).getCourse().getTitle();
         String duration = String.valueOf(_list.get(0).getCourse().getDuration());
+        final int courseId = _list.get(0).getCourse().getId();
         holder.txtHeader.setText(name + " (" + duration + "m)");
         holder.txtHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(name);
+                Intent intent = new Intent(v.getContext(), CourseDetailsActivity.class);
+                intent.putExtra("COURSE_ID", courseId);
+                v.getContext().startActivity(intent);
             }
         });
 

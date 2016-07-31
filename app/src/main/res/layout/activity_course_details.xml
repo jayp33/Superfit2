@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.japhdroid.superfit2.CourseDetailsActivity">
+
+    <TextView
+        android:id="@+id/course_details_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:textSize="20sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow android:layout_width="match_parent">
+
+            <View
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="D"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="M"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="D"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="F"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="S"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="S"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_marginTop="2dp"
+            android:background="#f0e792">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:paddingLeft="6dp"
+                android:text="Anzahl"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="10sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:background="#ededed">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="6dp"
+                android:text="06 - 10 Uhr"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="\u2022" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:background="#e6e6e6">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="6dp"
+                android:text="10 - 14 Uhr"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="\u2022" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:background="#ededed">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="6dp"
+                android:text="14 - 18 Uhr"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="\u2022" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:background="#e6e6e6">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="6dp"
+                android:text="18 - 22 Uhr"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="\u2022" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/course_details_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
