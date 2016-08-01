@@ -3,6 +3,8 @@ package com.japhdroid.superfit2;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,10 +12,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
     private Course course;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,23 @@ public class CourseDetailsActivity extends AppCompatActivity {
         setCourseTitle();
         setLessonCount();
         setTimespans();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.course_details_list);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        boolean showAllLessons = true;
+        TreeMap<Date, List<Lesson>> lessonsForCourse = DataProvider.getLessons().getLessonsGroupedByStarttime(course);
+        if (lessonsForCourse.size() > 0) {
+            mAdapter = new StarttimeAdapter(CourseDetailsActivity.this, lessonsForCourse, showAllLessons);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     private void setCourseTitle() {

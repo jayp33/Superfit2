@@ -25,6 +25,7 @@ import java.util.TreeMap;
 public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.ViewHolder> {
     private TreeMap<Date, List<Lesson>> mDataset;
     private Context adapterContext;
+    boolean showAllLessons = false;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -45,6 +46,11 @@ public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.View
     public StarttimeAdapter(Context adapterContext, TreeMap<Date, List<Lesson>> myDataset) {
         this.adapterContext = adapterContext;
         mDataset = myDataset;
+    }
+
+    public StarttimeAdapter(Context adapterContext, TreeMap<Date, List<Lesson>> myDataset, boolean showAllLessons) {
+        this(adapterContext, myDataset);
+        this.showAllLessons = showAllLessons;
     }
 
     // Create new views (invoked by the layout manager)
@@ -72,7 +78,7 @@ public class StarttimeAdapter extends RecyclerView.Adapter<StarttimeAdapter.View
         boolean firstItem = true;
         LayoutInflater inflater = LayoutInflater.from(adapterContext);
         for (final Lesson lesson : _list) {
-            if (lesson.lessonIsOver())
+            if (!showAllLessons && lesson.lessonIsOver())
                 continue;
             if (firstItem)
                 holder.starttimeGroup.removeAllViews();

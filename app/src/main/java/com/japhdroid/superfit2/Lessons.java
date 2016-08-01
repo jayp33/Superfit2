@@ -258,6 +258,23 @@ public class Lessons {
         return lessonsForTimespan;
     }
 
+    public TreeMap<Date, List<Lesson>> getLessonsGroupedByStarttime(Course course) {
+        List<Lesson> lessonsForCourse = getLessons(course);
+        TreeMap<Date, List<Lesson>> result = new TreeMap<>();
+        for (int i = 0; i < lessonsForCourse.size(); i++) {
+            Date starttimeExact = lessonsForCourse.get(i).getStarttimeExact();
+            if (!result.containsKey(starttimeExact)) {
+                List<Lesson> lessonsForStarttimeExact = new ArrayList<>();
+                for (int j = 0; j < lessonsForCourse.size(); j++) {
+                    if (lessonsForCourse.get(j).getStarttimeExact().equals(starttimeExact))
+                        lessonsForStarttimeExact.add(lessonsForCourse.get(j));
+                }
+                result.put(starttimeExact, lessonsForStarttimeExact);
+            }
+        }
+        return result;
+    }
+
     public List<Studio> getStudiosForTimespan(Course course, Lesson.Weekday weekday, Lesson.Timespan timespan) {
         List<Lesson> lessonsForTimespan = getLessons(course, weekday, timespan);
         List<Studio> studiosForTimespan = new ArrayList<>();
